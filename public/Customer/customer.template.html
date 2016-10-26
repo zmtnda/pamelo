@@ -1,0 +1,88 @@
+<h2 style="font-style:italic;">Customer Home Page</h2>
+
+<div class="col-xs-4 col-md-4 col-lg-4">
+    <div class="thumbnail">
+        <div class="list-group">
+            <div class="list-group-item ">
+                <h4 class="list-group-item-heading">Order an Serivces</h4>
+                <button type="button" class="btn" ng-class="isShowListServices | btnState" ng-click="showListServices()">Order</button><br/>
+            </div>
+            </br>
+             <div class="list-group-item ">
+                <h4 class="list-group-item-heading">Order History</h4>
+                <button type="button" class="btn" ng-class="isShowOrderHistory | btnState" ng-click="showOrderHistory()">show</button>
+            </div>
+            </br>
+
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">Update your personal info</h4>
+                <button type="button" class="btn" ng-class="isShowPersonalField | btnState" ng-click="modifyCustomer()">Update Account</button>
+            </div>
+            </br>
+            <div class="list-group-item ">
+                <h4 class="list-group-item-heading">BYE</h4>
+                <button type="button" class="btn btn-primary" ng-click="deleteCustomer()">Delete this Account</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-8 col-md-8 col-lg-8">
+    <!-- SHOW SERIVCES-->
+    <div class="thumbnail" ng-if="isShowListServices">
+        <h4>All the Available Services</h4><br/>
+        <div ng-repeat="ser in listServices" class="list-group-item">
+            <h8>Service Name: </h8>{{ser.serviceName}}<br/>
+            <h8>Price: </h8>${{ser.amount}}<br/>
+            <br/>
+            <button type="button" class="btn btn-primary" ng-click="order(ser.id)">Order</button>
+        </div>
+        <br/>
+        <button type="button" class="btn btn-primary" ng-click="cancelListServices()">Cancel</button>
+    </div>
+
+
+     <!-- SHOW ALL ORDER HISTORY -->
+    <div class="thumbnail" ng-if="isShowOrderHistory">
+        <h4>All the Transasction History</h4><br/>
+         <div ng-repeat="hist in hists" class="alert alert-warning" role="alert">
+             <h8>History id: </h8>{{hist.id}}<br/>
+             <h8>User Id: </h8>${{hist.userId}}<br/>
+             <h8>Technician Id: </h8>${{hist.technicianId}}<br/>
+             <h8>Service Id: </h8>{{hist.serviceId}}<br/>
+             <h8>Date and Time </h8>${{hist.whenCompleted}}<br/>
+             <br/>
+         </div>
+         <button type="button" class="btn btn-primary" ng-click="cancelOrderHistory()">Cancel</button>
+    </div>
+
+    <!-- SHOW PROMPTING USER'S NEW INFO-->
+    <div class="thumbnail" ng-if="isShowPersonalField">
+        <fieldset class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" placeholder="Enter New Email" ng-model="user.email">
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" placeholder="Password" ng-model="user.password">
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label>First Name</label>
+          <input type="firstName" class="form-control" placeholder="Enter first name" ng-model="user.firstName">
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label>Last Name</label>
+          <input type="lastName" class="form-control" placeholder="Enter last name" ng-model="user.lastName">
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label>Phone</label>
+          <input type="phone" class="form-control" placeholder="Enter phone name" ng-model="user.phone">
+        </fieldset>
+        <button type="button" class="btn btn-primary" ng-click="postModify()">POST</button>
+        <button type="button" class="btn btn-primary" ng-click="cancelModify()">Cancel</button>
+    </div>
+</div>
