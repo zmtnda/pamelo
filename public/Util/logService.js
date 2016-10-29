@@ -4,6 +4,10 @@ function(rscope, http, state, nDlg, route) {
       rscope.inSession = null;
       rscope.cookie = null;
 
+		this.addUser = function(roleP, emailP, passwordP, fName, lName, phoneP)
+		{
+			return http.post("User", {email: emailP, password: passwordP, role: roleP, firstName: fName, lastName: lName, phone: phoneP});
+		}		
       this.login = function(emailParam, passwordParam)
       {
         http.post("Ssns", {email: emailParam, password: passwordParam})

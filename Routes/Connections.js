@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 
 var Connections = function() {
+	console.log("connection js");
    var poolCfg = require('./connection.json');
    var env = process.env;
 

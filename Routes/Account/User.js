@@ -1,4 +1,3 @@
-
 var Express = require('express');
 var connections = require('../Connections.js');
 var Tags = require('../Validator.js').Tags;
@@ -83,11 +82,14 @@ router.get('/', function(req, res) {
 //    role 0 for consumer, 1 for technician, 2 for admin
 //    WhenRegistered When was the user first registered
 router.post('/', function(req, res) {
+	console.log("POST Users/");
    var vld = req.validator;  // Shorthands
    var body = req.body;
-   var admin = req.session && req.session.isAdmin();
-
+   /* var admin = req.session && req.session.isAdmin(); */
+var admin = req.session;
 	 if (admin && !body.password)
+	//if (!body.password)
+
       body.password = "*";                       // Blockig password
    body.whenRegistered = new Date();
 

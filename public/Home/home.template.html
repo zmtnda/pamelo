@@ -12,9 +12,9 @@
             <input type="password" class="form-control" placeholder="Password" ng-model="user.password">
           </fieldset>
 
-            <button type="button" class="btn btn-primary" id="submitBtn" ng-click="login()"
-            ng-hide="!user.password || !user.email">Submit</button>
-            <button type="button" class="btn btn-primary" ng-click="openRegister()">Register</button>
+            <button type="button" class="btn btn-primary" ng-click="login()">Sign In</button>
+
+				<button class="btn btn-link" ng-click="addUser()">Please Sign Up if you don't have an account</button>
         </form>
         <div ng-if="inSession">
             <button type="button" class="btn btn-primary" ng-click="goMain(loggedUser.role)">Mange Account</button>

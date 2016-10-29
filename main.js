@@ -25,14 +25,23 @@ app.use(Session.router);
 
 app.use(function(req, res, next) {
    req.validator = new Validator(req, res);
-
-   if (req.session || (req.method === 'POST' &&
+	next();
+/* console.log("main.js" + req.method + " " + req.path);
+   if ((req.method === 'POST' &&
     (req.path === '/User' || req.path === '/Ssns')))
-      next();
-   else
-      res.status(401).json([{tag: Validator.Tags.noLogin}]);
+	 {
+      console.log("yes main.js");
 
-});
+		next();
+	 }
+   else
+	{
+      console.log("no main.js");
+
+		res.status(401).json([{tag: Validator.Tags.noLogin}]);
+	} */
+
+}); 
 
 app.use('/User', require('./Routes/Account/User'));
 app.use('/Ssns', require('./Routes/Account/Ssns'));

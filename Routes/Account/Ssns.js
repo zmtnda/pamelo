@@ -23,6 +23,8 @@ router.get('/', function(req, res) {
       };
       res.status(200).json(body);
    }
+	else
+		console.log("I am not Admin");
 });
 
 // A successful POST generates a browser-session cookie that will permit continued access for 2 hours.
@@ -35,6 +37,7 @@ router.get('/', function(req, res) {
 //       }
 router.post('/', function(req, res) {
    var cookie;
+	console.log('POST Ssns/');
 
    connections.getConnection(res, function(cnn) {
       cnn.query('select * from Users where email = ?', [req.body.email], function(err, result) {
