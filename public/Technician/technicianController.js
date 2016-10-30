@@ -1,32 +1,80 @@
 app.controller('technicianController', ['$scope', '$state','logService', '$http', '$rootScope', 'notifyDlg',function(scope, state, logSer, http, rscope, noDlg) {
     scope.user = {};
-    scope.isShowField = 0;
+    scope.viewEnum = {
+      NONE: 0,
+      PROVIDE: 1,
+      SERVICES: 2,
+      PERSONAL: 3
+    };
+
+    scope.isShowProvide = 0;
     scope.isShowListServices = 0;
     scope.isShowPersonalField = 0;
     scope.listServices = [];
     scope.field = {};
 
-    //Togglers:
-    scope.showField = function(){scope.isShowField = 1;}
-    scope.modifyTechnician = function(){scope.isShowPersonalField = 1;}
-    scope.cancelField = function(){scope.isShowField = 0;}
-    scope.cancelListServices = function(){scope.isShowListServices = 0;}
-    scope.cancelModify = function(){scope.isShowPersonalField = 0;}
+    scope.switchView = function(newView) {
+      switch (newView) {
+        case scope.viewEnum.NONE:
+          scope.isShowPersonalField = 0;
+          scope.isShowListServices = 0;
+          scope.isShowProvide = 0;
+          break;
+        case scope.viewEnum.PERSONAL:
+          scope.isShowPersonalField = 1;
+          scope.isShowListServices = 0;
+          scope.isShowProvide = 0;
+          break;
+        case scope.viewEnum.SERVICES:
+          scope.isShowListServices = 1;
+          scope.isShowPersonalField = 0;
+          scope.isShowProvide = 0;
+          break;
+        case scope.viewEnum.PROVIDE:
+          scope.isShowProvide = 1;
+          scope.isShowListServices = 0;
+          scope.isShowPersonalField = 0;
+          break;
+      }
+    }
+
+    // Toggle view for viewing provided services
+    scope.showProvide = function(){
+      if (scope.isShowProvide == 0) {
+        scope.switchView(scope.viewEnum.PROVIDE);
+      } else {
+        scope.switchView(scope.viewEnum.NONE);
+      }
+    }
+
+    // Toggle view for modifying personal info
+    scope.modifyTechnician = function(){
+      if (scope.isShowPersonalField == 0) {
+        scope.switchView(scope.viewEnum.PERSONAL);
+      } else {
+        scope.switchView(scope.viewEnum.NONE);
+      }
+    }
+
     //Toggle a list of services by a http call
     scope.showListServices = function()
     {
+      if (scope.isShowOrderHistory == 1) {
+        scope.switchView(scope.viewEnum.NONE);
+      } else {
         http.get("Serv/" + rscope.loggedUser.id)
         .then(function(response){
           console.log("response.data: " + JSON.stringify(response));
           scope.listServices = response.data;
-          scope.isShowListServices = 1;
+          scope.switchView(scope.viewEnum.SERVICES);
         }).
         catch(function(err){noDlg.show(scope, err, "Error")});
+      }
     }
 
     scope.postModify = function()
     {
-        scope.isShowPersonalField = 0;
+        scope.switchView(scope.viewEnum.NONE);
         http.put("User/"+rscope.loggedUser.id, scope.user)
         .then(function(){
           noDlg.show(scope, "Please re-login to see the changes", "NOTE!!!");

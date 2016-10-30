@@ -5,8 +5,8 @@ app.controller('homeController', ['$scope', '$state', '$rootScope','goToServices
        logSer.login(scope.user.email, scope.user.password);
    }
 
-   scope.openRegister = function(){
-       regPopSer.show(scope, "Register");
+   scope.addUser = function(){
+       regPopSer = regPopSer.show(scope, "Register");
    }
 
    rscope.logout = logSer.logout;

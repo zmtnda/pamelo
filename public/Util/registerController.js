@@ -1,3 +1,20 @@
+ app.controller('registerController', ['$rootScope','$scope', '$state', 'goToServices','logService', '$http', 'notifyDlg', function(rscope, scope, state, goSer, logSer, http, noDlg) {
+    scope.user = {};
+    scope.submitted = 0;
+
+    scope.postUser = function(){
+        //console.log(JSON.stringify(scope.user));
+        //Do a post caToll
+		  scope.submitted = 1;
+		  logSer.addUser(scope.user.role, scope.user.email, scope.user.password, scope.user.firstName, scope.user.lastName, scope.user.phone)
+		  .then (function(){
+			   if(rscope.loggedUser.email !== 'Admin@11.com')
+					logSer.login(scope.user.email, scope.user.password);
+		  }) 
+		  .catch(function(err){noDlg.show(scope, err, "Error")}); 
+	}
+}])
+/*
 app.controller('registerController', ['$scope', '$state', 'goToServices','logService', '$http', 'notifyDlg', function(scope, state, goSer, logSer, http, noDlg) {
     scope.user = {};
     scope.submitted = 0;
@@ -14,3 +31,4 @@ app.controller('registerController', ['$scope', '$state', 'goToServices','logSer
     }
 
 }])
+ */

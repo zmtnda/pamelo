@@ -2,6 +2,7 @@
 // Create a validator that draws its session from |req|, and reports
 // errors on |res|
 var Validator = function(req, res) {
+	console.log("Validator");
    this.errors = [];   // Array of error objects having tag and params
    this.session = req.session;
    this.res = res

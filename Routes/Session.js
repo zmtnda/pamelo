@@ -7,6 +7,7 @@ var duration = 7200000; // Two hours in milliseconds
 var cookieName = 'CHSAuth';
 
 exports.router = function(req, res, next) {
+	console.log("Session js");
    if (req.cookies[cookieName]) {
       if (sessions[req.cookies[cookieName]]) {
          if (sessions[req.cookies[cookieName]].lastUsed < new Date().getTime() - duration) {
@@ -21,6 +22,7 @@ exports.router = function(req, res, next) {
 };
 
 var Session = function Session(user) {
+	console.log("new session");
    this.firstName = user.firstName;
    this.lastName = user.lastName;
    this.id = user.id;
@@ -40,6 +42,8 @@ Session.prototype.isTechnician = function() {
 };
 
 exports.makeSession = function makeSession(user, res) {
+	
+	console.log("make session");
    var cookie = crypto.randomBytes(16).toString('hex');
    var session = new Session(user);
 
