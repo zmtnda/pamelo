@@ -10,7 +10,7 @@
             </br>
              <div class="list-group-item ">
                 <h4 class="list-group-item-heading">View Your Services</h4>
-                <button type="button" class="btn" ng-class="isShowListServices | btnState" ng-click="showListServices()">Current Services</button>
+                <button type="button" class="btn" ng-class="isShowListServices | btnState" ng-click="showListServices()">My Services</button>
             </div>
             </br>
             <div class="list-group-item">
@@ -38,7 +38,7 @@
           <label>Amount</label>
           <input type="amount" class="form-control" placeholder="Amount" ng-model="field.amount">
         </fieldset>
-        <button type="button" class="btn btn-primary" ng-click="postService()">Post</button>
+        <button type="button" class="btn btn-primary" ng-click="postService()">Add to My Services</button>
     </div>
      <!-- SHOW ALL SERVICES -->
     <div class="thumbnail" ng-if="isShowListServices">
@@ -46,7 +46,6 @@
                 <h4>serviceName: </h4>{{ser.serviceName}}</br></br>
                 <h4>status: </h4>{{ser.status}}</br></br>
                 <h4>timestamp: </h4>{{ser.timestamp}}</br></br>
-                <h4>technicianId: </h4>{{ser.technicianId}}
          </div>
     </div>
     <!-- SHOW PROMPTING USER'S NEW INFO-->
