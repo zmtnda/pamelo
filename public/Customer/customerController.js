@@ -9,18 +9,25 @@ app.controller('customerController', ['$scope', '$state','registerPopService', '
 
     scope.showListServices = function(){scope.isShowListServices = 1;}
     scope.ShowOrderHistory = function(){scope.isShowOrderHistory = 1;}
-    scope.modifyCustomer = function(){scope.isShowPersonalField = 1;}
-    scope.cancelListServices = function(){scope.isShowListServices = 0;}
-    scope.cancelOrderHistory = function(){scope.isShowOrderHistory = 0;}
-    scope.cancelModify = function(){scope.isShowPersonalField = 0;}
+    scope.modifyCustomer = function(){
+      if (scope.isShowPersonalField == 0) {
+        scope.isShowPersonalField = 1;
+      } else {
+        scope.isShowPersonalField = 0;
+      }
+    }
 
     scope.showOrderHistory = function(){
-        scope.isShowOrderHistory = 1;
-        http.get('User/serviceHistory/all')
-        .then(function(res){
-              scope.hists = res.data;
-        })
-        .catch(function(err){noDlg.show(scope, err, "Error")});
+        if (scope.isShowOrderHistory == 1) {
+          scope.isShowOrderHistory = 0;
+        } else {
+          scope.isShowOrderHistory = 1;
+          http.get('User/serviceHistory/all')
+          .then(function(res){
+                scope.hists = res.data;
+          })
+          .catch(function(err){noDlg.show(scope, err, "Error")});
+      }
     }
 
     scope.postModify = function(){
@@ -54,12 +61,15 @@ app.controller('customerController', ['$scope', '$state','registerPopService', '
     }
 
     scope.showListServices = function(){
-      scope.isShowListServices = 1;
-      http.get('Serv/')
-      .then(function(response) {
-         scope.listServices = response.data;
-      })
-      .catch(function(err){noDlg.show(scope, err, "Error")});
-
+      if (scope.isShowListServices == 1) {
+        scope.isShowListServices = 0;
+      } else {
+        scope.isShowListServices = 1;
+        http.get('Serv/')
+        .then(function(response) {
+           scope.listServices = response.data;
+        })
+        .catch(function(err){noDlg.show(scope, err, "Error")});
+      }
     }
 }])
