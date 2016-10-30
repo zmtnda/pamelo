@@ -46,10 +46,10 @@
         <h4>My Past Orders</h4><br/>
          <div ng-repeat="hist in hists" class="alert alert-warning" role="alert">
              <h8>History id: </h8>{{hist.id}}<br/>
-             <h8>User Id: </h8>${{hist.userId}}<br/>
-             <h8>Technician Id: </h8>${{hist.technicianId}}<br/>
+             <h8>User Id: </h8>{{hist.userId}}<br/>
+             <h8>Technician Id: </h8>{{hist.technicianId}}<br/>
              <h8>Service Id: </h8>{{hist.serviceId}}<br/>
-             <h8>Date and Time </h8>${{hist.whenCompleted}}<br/>
+             <h8>Date and Time </h8>{{hist.whenCompleted}}<br/>
              <br/>
          </div>
     </div>
