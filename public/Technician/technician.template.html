@@ -5,16 +5,16 @@
         <div class="list-group">
             <div class="list-group-item ">
                 <h4 class="list-group-item-heading">Help Other Students</h4>
-                <button type="button" class="btn" ng-class="isShowField | btnState" ng-click="showField()">Provide A Service</button><br/>
+                <button type="button" class="btn" ng-class="isShowProvide | btnState" ng-click="showProvide()">Provide A Service</button><br/>
             </div>
             </br>
              <div class="list-group-item ">
-                <h4 class="list-group-item-heading">See what services you have</h4>
-                <button type="button" class="btn" ng-class="isShowListServices | btnState" ng-click="showListServices()">Current Services</button>
+                <h4 class="list-group-item-heading">View Your Services</h4>
+                <button type="button" class="btn" ng-class="isShowListServices | btnState" ng-click="showListServices()">My Services</button>
             </div>
             </br>
             <div class="list-group-item">
-                <h4 class="list-group-item-heading">Update your personal info</h4>
+                <h4 class="list-group-item-heading">Update Personal Info</h4>
                 <button type="button" class="btn" ng-class="isShowPersonalField | btnState" ng-click="modifyTechnician()">Update Account</button>
             </div>
             </br>
@@ -28,7 +28,7 @@
 
 <div class="col-xs-8 col-md-8 col-lg-8">
     <!-- SHOW PROMPTING SERIVCES-->
-    <div class="thumbnail" ng-if="isShowField">
+    <div class="thumbnail" ng-if="isShowProvide">
         <fieldset class="form-group">
           <label>Service Name</label>
           <input type="serviceName" class="form-control" placeholder="Enter Service Name" ng-model="field.serviceName">
@@ -38,8 +38,7 @@
           <label>Amount</label>
           <input type="amount" class="form-control" placeholder="Amount" ng-model="field.amount">
         </fieldset>
-        <button type="button" class="btn btn-primary" ng-click="postService()">Post</button>
-        <button type="button" class="btn btn-primary" ng-click="cancelField()">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="postService()">Add to My Services</button>
     </div>
      <!-- SHOW ALL SERVICES -->
     <div class="thumbnail" ng-if="isShowListServices">
@@ -47,9 +46,7 @@
                 <h4>serviceName: </h4>{{ser.serviceName}}</br></br>
                 <h4>status: </h4>{{ser.status}}</br></br>
                 <h4>timestamp: </h4>{{ser.timestamp}}</br></br>
-                <h4>technicianId: </h4>{{ser.technicianId}}
          </div>
-         <button type="button" class="btn btn-primary" ng-click="cancelListServices()">Cancel</button>
     </div>
     <!-- SHOW PROMPTING USER'S NEW INFO-->
     <div class="thumbnail" ng-if="isShowPersonalField">
@@ -78,6 +75,5 @@
           <input type="phone" class="form-control" placeholder="Enter phone name" ng-model="user.phone">
         </fieldset>
         <button type="button" class="btn btn-primary" if-ng="user.email&&user.password&&user.firstName&&user.lastName" ng-click="postModify()">POST</button>
-        <button type="button" class="btn btn-primary" ng-click="cancelModify()">Cancel</button>
     </div>
 </div>
