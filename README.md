@@ -19,9 +19,9 @@ https://www.youtube.com/watch?v=qIULMnbH2-o&list=PL6gx4Cwl9DGBPw1sFodruZUPheWVKc
 - Single threaded model
 
 # AngularJS:
-This tutorial should give you guys a general picture of angularJS:
+- This tutorial should give you guys a general picture of angularJS:
 https://www.youtube.com/watch?v=ejBkOjEG6F0
-Practical tutorials:
+- Practical tutorials:
 http://www.w3schools.com/angular/
 
 # Nodejs Tutorial:
