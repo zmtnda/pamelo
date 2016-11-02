@@ -82,8 +82,21 @@ app.controller('technicianController', ['$scope', '$state','logService', '$http'
         })
         .catch(function(err){noDlg.show(scope, err, "Error")});
     }
+
+    scope.deleteService = function(id){
+      http.delete("Serv/" + id)
+      .then(function(){
+          console.log("reloading");
+          //state.reload();
+          scope.isShowListServices = 0;
+          scope.showListServices();
+      })
+      .catch(function(err){noDlg.show(scope, err, "Error")});
+    }
+
     //Delete a Technician
     scope.deleteTechnician = function(){
+        //Asks for deletion confirmation
         if(window.confirm("Are you sure you want to delete your account?"))
         {
             http.delete("User/" + rscope.loggedUser.id)
