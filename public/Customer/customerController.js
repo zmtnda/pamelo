@@ -80,14 +80,18 @@ app.controller('customerController', ['$scope', '$state','registerPopService', '
         .catch(function(err){noDlg.show(scope, err, "Error")});
     }
 
-    scope.deleteCustomer = function(){
-
-      http.delete("User/" + rscope.loggedUser.id)
-      .then(function(){
-          state.go('home');
-          logSer.logout();
-      })
-      .catch(function(err){noDlg.show(scope, err, "Error")});
+    //Deletes customer account
+    scope.deleteCustomer = function () {
+        //Asks for deletion confirmation
+        if (window.confirm("Are you sure you want to delete your account?"))
+        {
+            http.delete("User/" + rscope.loggedUser.id)
+            .then(function () {
+                state.go('home');
+                logSer.logout();
+            })
+            .catch(function (err) { noDlg.show(scope, err, "Error") });
+        }
     }
 
     scope.showListServices = function(){

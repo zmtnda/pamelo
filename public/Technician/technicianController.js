@@ -94,12 +94,16 @@ app.controller('technicianController', ['$scope', '$state','logService', '$http'
 
     //Delete a Technician
     scope.deleteTechnician = function(){
-        http.delete("User/" + rscope.loggedUser.id)
-        .then(function(){
-            state.go('home');
-            logSer.logout();
-        })
-        .catch(function(err){noDlg.show(scope, err, "Error")});
+        //Asks for deletion confirmation
+        if(window.confirm("Are you sure you want to delete your account?"))
+        {
+            http.delete("User/" + rscope.loggedUser.id)
+            .then(function(){
+                state.go('home');
+                logSer.logout();
+            })
+            .catch(function(err){noDlg.show(scope, err, "Error")});
+        }
     }
     //Write a call to do post service
     scope.postService = function()
