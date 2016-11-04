@@ -184,9 +184,9 @@ router.delete('/:servId', function(req, res) {
 	var servId = req.params.servId;
 	var loginId = req.session && req.session.id;
 	connections.getConnection(res, function(cnn) {
-		cnn.query(' SELECT * FORM Services WHERE id = ? ', servId,
+		cnn.query(' SELECT * FROM Services WHERE id = ? ', servId,
 			function(err, result){
-				if(result.length ){
+				if(result.length){
 					if(result[0].status == 1){
 						if(vld.checkAdmin()){
 							//continue to delete the following query
@@ -195,6 +195,7 @@ router.delete('/:servId', function(req, res) {
 						else
 							cnn.release();
 					}
+
 					//delete it don't require else
 					cnn.query(' DELETE FROM Services WHERE id = ? ', servId,
 						function(err){
@@ -204,7 +205,6 @@ router.delete('/:servId', function(req, res) {
 							cnn.release();
 						});
 				}
-
 				else{
 					res.status(404).end();
 					cnn.release();

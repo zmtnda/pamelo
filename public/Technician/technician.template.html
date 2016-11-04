@@ -20,7 +20,7 @@
             </br>
             <div class="list-group-item ">
                 <h4 class="list-group-item-heading">BYE</h4>
-                <button type="button" class="btn btn-primary" ng-click="deleteTechnician()">Delete this Account</button>
+                <button type="button" class="btn btn-warning" ng-click="deleteTechnician()">Delete this Account</button>
             </div>
         </div>
     </div>
@@ -46,6 +46,7 @@
                 <h4>serviceName: </h4>{{ser.serviceName}}</br></br>
                 <h4>status: </h4>{{ser.status}}</br></br>
                 <h4>timestamp: </h4>{{ser.timestamp}}</br></br>
+                <button type="button" class="btn btn-primary" ng-click="deleteService(ser.id)">Delete Service</button>
          </div>
     </div>
     <!-- SHOW PROMPTING USER'S NEW INFO-->
