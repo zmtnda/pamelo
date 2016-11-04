@@ -86,8 +86,6 @@ app.controller('technicianController', ['$scope', '$state','logService', '$http'
     scope.deleteService = function(id){
       http.delete("Serv/" + id)
       .then(function(){
-          console.log("reloading");
-          //state.reload();
           scope.isShowListServices = 0;
           scope.showListServices();
       })
