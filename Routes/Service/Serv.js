@@ -186,7 +186,7 @@ router.delete('/:servId', function(req, res) {
 	connections.getConnection(res, function(cnn) {
 		cnn.query(' SELECT * FORM Services WHERE id = ? ', servId,
 			function(err, result){
-				if(result.length ){
+				if(result.length ){ 
 					if(result[0].status == 1){
 						if(vld.checkAdmin()){
 							//continue to delete the following query

@@ -43,4 +43,3 @@ VALUES (5, "Screen Replacement ", 60.00, 0, NOW(),5);
 INSERT INTO Services
 (id,serviceName,amount, status,timestamp,technicianId)
 VALUES (6, "Battery Replacement ", 30.00, 0, NOW(),5);
-

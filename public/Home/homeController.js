@@ -6,7 +6,8 @@ app.controller('homeController', ['$scope', '$state', '$rootScope','goToServices
    }
 
    scope.addUser = function(){
-       regPopSer = regPopSer.show(scope, "Register");
+       regPopSer = regPopSer.show(scope, "Register")
+		 .then(function(){state.reload()});
    }
 
    rscope.logout = logSer.logout;
