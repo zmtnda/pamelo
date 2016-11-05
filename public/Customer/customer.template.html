@@ -5,7 +5,7 @@
         <div class="list-group">
             <div class="list-group-item ">
                 <h4 class="list-group-item-heading">Order a Service</h4>
-                <button type="button" class="btn" ng-class="isShowListServices | btnState" ng-click="showListServices()">Order</button><br/>
+                <button type="button" class="btn" ng-class="isShowServiceOfferField | btnState" ng-click="showListServices()">Order</button><br/>
             </div>
             </br>
              <div class="list-group-item ">
@@ -29,16 +29,21 @@
 
 <div class="col-xs-8 col-md-8 col-lg-8">
     <!-- SHOW SERIVCES-->
-    <div class="thumbnail" ng-if="isShowListServices">
+    <div class="thumbnail" ng-if="isShowServiceOfferField">
         <h4>Available Services</h4><br/>
-        <div ng-repeat="ser in listServices" class="list-group-item">
-            <h8>Service Name: </h8>{{ser.serviceName}}<br/>
-            <h8>Price: </h8>${{ser.amount}}<br/>
-            <br/>
-            <button type="button" class="btn btn-primary" ng-click="order(ser.id)">Order</button>
-        </div>
+		  <select ng-model="field.serviceName" ng-change="changedValue(field.serviceName)"
+		  data-ng-options="item.serviceName for item in listServices">
+		  </select>
+		  <div class="thumbnail" ng-if="isShowListServices">
+			  <div ng-repeat="ser in offerServices" class="list-group-item">
+					<h8>Service Name: </h8>{{ser.serviceName}}<br/>
+					<h8>Price: </h8>${{ser.amount}}<br/>
+					<br/>
+					<button type="button" class="btn btn-primary" ng-click="order(ser.id)">Order</button>
+			  </div>
+		  </div>
         <br/>
-    </div>
+    </div>  
 
 
      <!-- SHOW ALL ORDER HISTORY -->
@@ -46,10 +51,10 @@
         <h4>My Past Orders</h4><br/>
          <div ng-repeat="hist in hists" class="alert alert-warning" role="alert">
              <h8>History id: </h8>{{hist.id}}<br/>
-             <h8>User Id: </h8>${{hist.userId}}<br/>
-             <h8>Technician Id: </h8>${{hist.technicianId}}<br/>
+             <h8>User Id: </h8>{{hist.userId}}<br/>
+             <h8>Technician Id: </h8>{{hist.technicianId}}<br/>
              <h8>Service Id: </h8>{{hist.serviceId}}<br/>
-             <h8>Date and Time </h8>${{hist.whenCompleted}}<br/>
+             <h8>Date and Time </h8>{{hist.whenCompleted}}<br/>
              <br/>
          </div>
     </div>

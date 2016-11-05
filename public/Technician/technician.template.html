@@ -31,7 +31,8 @@
     <div class="thumbnail" ng-if="isShowProvide">
         <fieldset class="form-group">
           <label>Service Name</label>
-          <input type="serviceName" class="form-control" placeholder="Enter Service Name" ng-model="field.serviceName">
+			 <select ng-model="field.serviceName" ng-options="item.serviceName for item in listServices">
+			 </select>
         </fieldset>
 
         <fieldset class="form-group">
@@ -46,6 +47,7 @@
                 <h4>serviceName: </h4>{{ser.serviceName}}</br></br>
                 <h4>status: </h4>{{ser.status}}</br></br>
                 <h4>timestamp: </h4>{{ser.timestamp}}</br></br>
+					 <button type="button" class="btn btn-primary" ng-click="deleteService(ser.id)">Delete Service</button>
          </div>
     </div>
     <!-- SHOW PROMPTING USER'S NEW INFO-->

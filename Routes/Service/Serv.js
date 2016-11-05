@@ -9,14 +9,37 @@ router.baseURL = '/Serv';
 // Begin '/Serv/' functions
 
 // Retrieve all the Services in the database.
-// AU must be admin.
+// AU must be admin. (Zin edited can be technician)
 router.get('/', function(req, res) {
 	var vld = req.validator;
-	var admin = req.session && req.session.isAdmin();
+	var user = req.session;
 
-	if(vld.check(admin || req.session.role === 0, Tags.noPermission)){
+	if(vld.check(user, Tags.noPermission)){
 		connections.getConnection(res, function(cnn) {
 			cnn.query(' SELECT * FROM Services ',
+			function(err, result){
+				if(!err){
+					res.json(result);
+					cnn.release();
+				}
+				else{
+					res.status(404).end();
+					cnn.release();
+				}
+			});
+		});
+	}
+});
+// Retrieve all the technician and associated services 
+// based on the service chosen
+router.get('/:servId/Services', function(req, res) {
+	var vld = req.validator;
+	var user = req.session;
+	var servId = req.params.servId;;
+	console.log("get from ServicesOffer");
+	if(vld.check(user, Tags.noPermission)){
+		connections.getConnection(res, function(cnn) {
+			cnn.query(' SELECT * FROM ServicesOffer WHERE serviceId = ? ', servId,
 			function(err, result){
 				if(!err){
 					res.json(result);
@@ -48,7 +71,8 @@ router.get('/:techId', function(req, res) {
 
 	if(vld.checkPrsOK(techId, Tags.noPermission)){
 		connections.getConnection(res, function(cnn) {
-			cnn.query(' SELECT * FROM Services WHERE technicianId = ? ', techId,
+			cnn.query(' SELECT * FROM ServicesOffer T1 JOIN Services T2 '
+			+ ' WHERE T1.serviceId = T2.id  AND technicianId = ? ', techId,
 			function(err, result){
 				if(!err){
 					res.json(result);
@@ -80,7 +104,8 @@ router.get('/:userId', function(req, res) {
 
 	if(vld.checkPrsOK(userId, Tags.noPermission)){
 		connections.getConnection(res, function(cnn) {
-			cnn.query(' SELECT * FROM Services WHERE userId = ? ', usrId,
+			cnn.query(' SELECT * FROM ServicesOffer T1 JOIN Services T2 '
+			+ ' WHERE T1.serviceId = T2.id  AND userId = ? ', usrId,
 			function(err, result){
 				if(!err){
 					res.json(result);
@@ -110,8 +135,8 @@ router.get('/:servId', function(req, res) {
 	var loginId = req.session && req.session.id;
 
    connections.getConnection(res, function(cnn) {
-      cnn.query('SELECT * FROM Services WHERE userId = ? && '
-		+ ' servId = ? OR technicianId = ? && servId = ? ',
+      cnn.query('SELECT * FROM ServicesOffer WHERE userId = ? && '
+		+ ' serviceId = ? OR technicianId = ? && serviceId = ? ',
 		[loginId, servId, logginId, servId],
       function(err, result) {
          if (!err)
@@ -131,11 +156,12 @@ router.put('/:servId/Order', function(req, res) {
 
 		connections.getConnection(res, function(cnn) {
 			//check if such servId exist and get techId
-			cnn.query(' SELECT * FROM Services WHERE id = ? ', servId,
+			cnn.query(' SELECT * FROM ServicesOffer WHERE id = ? ', servId,
 				function(err, result){
+					console.log("Order servId= " + servId );
 					if(vld.chain(result.length, Tags.notFound).check(!result[0].status == 1, Tags.alreadyTakenService)){
 						//check if service is already taken when status = 1
-						cnn.query(' UPDATE Services SET status = ? WHERE id = ? ', [1 ,servId],
+						cnn.query(' UPDATE ServicesOffer SET status = ? WHERE id = ? ', [1 ,servId],
 						function(err){
 							if(err){
 								res.status(400).end();
@@ -177,16 +203,53 @@ router.put('/:servId/Order', function(req, res) {
 // Delete a service specified by <Servld>. Admin or Service Owner
 // If there is an open ticket for that service only Admin can delete it
 // status 0 for open, 1 pending, 2 closed, 3 cancel
+router.delete('/:servId/Order', function(req, res) {
+   // function is yet to be implemeneted.
+	var vld = req.validator;
+	var servId = req.params.servId;
+	var loginId = req.session && req.session.id;
+	console.log("servid = " + servId);
+	connections.getConnection(res, function(cnn) {
+		cnn.query(' SELECT * FROM ServicesOffer WHERE id = ? ', servId,
+			function(err, result){
+				if(result.length ){ 
+					if(result[0].status == 1){
+						if(vld.checkAdmin() || loginId){
+							//continue to delete the following query
+							console.log("It is admin after all to delete the pending service Serv/:servId ");
+						}
+						else
+							cnn.release();
+					}
+					//delete it don't require else
+					cnn.query(' DELETE FROM ServicesOffer WHERE id = ? ', servId,
+						function(err){
+							if (err)
+								console.log("Error deleting Serv/:servId ");
+							res.end();
+							cnn.release();
+						});
+				}
 
+				else{
+					res.status(404).end();
+					cnn.release();
+				}
+
+		});
+	});
+   res.end();
+});
+//delete from service table
 router.delete('/:servId', function(req, res) {
    // function is yet to be implemeneted.
 	var vld = req.validator;
 	var servId = req.params.servId;
 	var loginId = req.session && req.session.id;
 	connections.getConnection(res, function(cnn) {
-		cnn.query(' SELECT * FORM Services WHERE id = ? ', servId,
+		cnn.query(' SELECT * FROM Services WHERE id = ? ', servId,
 			function(err, result){
-				if(result.length ){
+				if(result.length ){ 
 					if(result[0].status == 1){
 						if(vld.checkAdmin()){
 							//continue to delete the following query

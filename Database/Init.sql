@@ -53,7 +53,13 @@ SHOW WARNINGS;*/
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS Services (
   id INT(11) AUTO_INCREMENT PRIMARY KEY,
-  serviceName VARCHAR(500) NOT NULL ,
+  serviceName VARCHAR(500) NOT NULL);
+-- -----------------------------------------------------
+-- Table services offer by technicians
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS ServicesOffer (
+  id INT(11) AUTO_INCREMENT PRIMARY KEY,
+  serviceId INT(11) NULL ,
   amount FLOAT NOT NULL DEFAULT 0.00 ,
   status int NOT NULL DEFAULT 0 ,
   timestamp DATETIME NOT NULL ,
@@ -64,11 +70,17 @@ CREATE  TABLE IF NOT EXISTS Services (
     REFERENCES Users (id )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
+	 CONSTRAINT fkServices
+    FOREIGN KEY (serviceId)
+    REFERENCES Services (id )
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT fkServicesTechnicians
     FOREIGN KEY (technicianId )
     REFERENCES Users (id )
     ON DELETE CASCADE
     ON UPDATE CASCADE);
+  
 -- -----------------------------------------------------
 -- Table technicians
 -- -----------------------------------------------------
@@ -85,7 +97,7 @@ CREATE  TABLE IF NOT EXISTS serviceHistory (
     ON UPDATE CASCADE,
 	CONSTRAINT fkHistoryServices
 	 FOREIGN KEY (serviceId)
-    REFERENCES Services (id)
+    REFERENCES ServicesOffer (serviceId)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 	CONSTRAINT fkHistoryUsers1
