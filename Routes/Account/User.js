@@ -245,22 +245,22 @@ router.post('/:id/Serv', function(req, res) {
 
    if(vld.checkPrsOK(req.params.id)
       && vld.check(req.session.role === 1 || admin, Tags.noPermission)
-      && vld.hasFields(body, ['serviceName', 'amount'])) {
+      && vld.hasFields(body, ['serviceId', 'amount'])) {
          // first check if poster has surpased their 5 service limit
-         qry = " SELECT * FROM Services WHERE technicianId = ? ";
+         qry = " SELECT * FROM ServicesOffer WHERE technicianId = ? ";
          qryParams = req.params.id;
          connections.getConnection(res, function(cnn) {
             cnn.query(qry, qryParams, function(err, results) {
                if(err) {
                   res.status(400).json(err); // closes reponse
-               } else if(vld.check(results.length < 5, Tags.maxServiceLimitReached)) {
+               } else if(vld.check(results.length < 100, Tags.maxServiceLimitReached)) {
                   // confirmed that user has not hit their service limit
                   // Now we can post their new service
                   body.status = 0;
                   body.technicianId = parseInt(req.params.id);
                   body.timestamp = new Date();
                   // making post request
-                  qry = "INSERT INTO Services SET ? ";
+                  qry = "INSERT INTO ServicesOffer SET ? ";
                   qryParams = body;
 						console.log("post service in Json: " + JSON.stringify(body));
                   cnn.query(qry, qryParams, function(err) {

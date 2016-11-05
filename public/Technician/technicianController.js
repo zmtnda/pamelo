@@ -12,6 +12,7 @@ app.controller('technicianController', ['$scope', '$state','logService', '$http'
     scope.isShowPersonalField = 0;
     scope.listServices = [];
     scope.field = {};
+	 var service = {};
 
     scope.switchView = function(newView) {
       switch (newView) {
@@ -41,7 +42,13 @@ app.controller('technicianController', ['$scope', '$state','logService', '$http'
     // Toggle view for viewing provided services
     scope.showProvide = function(){
       if (scope.isShowProvide == 0) {
+			 http.get("Serv")
+			 .then(function(response){
+          console.log("response.data: " + JSON.stringify(response));
+          scope.listServices = response.data;
         scope.switchView(scope.viewEnum.PROVIDE);
+			 }).
+        catch(function(err){noDlg.show(scope, err, "Error")});
       } else {
         scope.switchView(scope.viewEnum.NONE);
       }
@@ -95,9 +102,16 @@ app.controller('technicianController', ['$scope', '$state','logService', '$http'
     //Write a call to do post service
     scope.postService = function()
     {
-        http.post("User/" + rscope.loggedUser.id + "/Serv", scope.field)
-        .then(function(){state.reload()})
-        .catch(function(err){noDlg.show(scope, err, "Error")});
+		  var service = 
+                     {
+                         "serviceId": scope.field.serviceName.id,
+                         "amount": scope.field.amount
+                     };
+		 
+		 console.log("post service " + JSON.stringify(service));
+       http.post("User/" + rscope.loggedUser.id + "/Serv", service)
+       .then(function(){state.reload()})
+       .catch(function(err){noDlg.show(scope, err, "Error")});
     }
 
 }]);

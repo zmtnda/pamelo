@@ -9,12 +9,12 @@ router.baseURL = '/Serv';
 // Begin '/Serv/' functions
 
 // Retrieve all the Services in the database.
-// AU must be admin.
+// AU must be admin. (Zin edited can be technician)
 router.get('/', function(req, res) {
 	var vld = req.validator;
-	var admin = req.session && req.session.isAdmin();
+	var user = req.session;
 
-	if(vld.check(admin || req.session.role === 0, Tags.noPermission)){
+	if(vld.check(user, Tags.noPermission)){
 		connections.getConnection(res, function(cnn) {
 			cnn.query(' SELECT * FROM Services ',
 			function(err, result){
@@ -48,7 +48,8 @@ router.get('/:techId', function(req, res) {
 
 	if(vld.checkPrsOK(techId, Tags.noPermission)){
 		connections.getConnection(res, function(cnn) {
-			cnn.query(' SELECT * FROM Services WHERE technicianId = ? ', techId,
+			cnn.query(' SELECT * FROM ServicesOffer T1 JOIN Services T2 '
+			+ ' WHERE T1.serviceId = T2.id  AND technicianId = ? ', techId,
 			function(err, result){
 				if(!err){
 					res.json(result);
@@ -80,7 +81,8 @@ router.get('/:userId', function(req, res) {
 
 	if(vld.checkPrsOK(userId, Tags.noPermission)){
 		connections.getConnection(res, function(cnn) {
-			cnn.query(' SELECT * FROM Services WHERE userId = ? ', usrId,
+			cnn.query(' SELECT * FROM ServicesOffer T1 JOIN Services T2 '
+			+ ' WHERE T1.serviceId = T2.id  AND userId = ? ', usrId,
 			function(err, result){
 				if(!err){
 					res.json(result);
@@ -110,8 +112,8 @@ router.get('/:servId', function(req, res) {
 	var loginId = req.session && req.session.id;
 
    connections.getConnection(res, function(cnn) {
-      cnn.query('SELECT * FROM Services WHERE userId = ? && '
-		+ ' servId = ? OR technicianId = ? && servId = ? ',
+      cnn.query('SELECT * FROM ServicesOffer WHERE userId = ? && '
+		+ ' serviceId = ? OR technicianId = ? && serviceId = ? ',
 		[loginId, servId, logginId, servId],
       function(err, result) {
          if (!err)
@@ -184,7 +186,7 @@ router.delete('/:servId', function(req, res) {
 	var servId = req.params.servId;
 	var loginId = req.session && req.session.id;
 	connections.getConnection(res, function(cnn) {
-		cnn.query(' SELECT * FORM Services WHERE id = ? ', servId,
+		cnn.query(' SELECT * FROM Services WHERE id = ? ', servId,
 			function(err, result){
 				if(result.length ){ 
 					if(result[0].status == 1){
