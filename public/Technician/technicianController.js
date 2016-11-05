@@ -89,9 +89,18 @@ app.controller('technicianController', ['$scope', '$state','logService', '$http'
         })
         .catch(function(err){noDlg.show(scope, err, "Error")});
     }
+
+    scope.deleteService = function(id){
+      http.delete("Serv/" + id)
+      .then(function(){
+          scope.isShowListServices = 0;
+          scope.showListServices();
+      })
+      .catch(function(err){noDlg.show(scope, err, "Error")});
+    }
+
     //Delete a Technician
     scope.deleteTechnician = function(){
-
         http.delete("User/" + rscope.loggedUser.id)
         .then(function(){
             state.go('home');
