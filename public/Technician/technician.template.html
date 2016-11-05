@@ -31,7 +31,8 @@
     <div class="thumbnail" ng-if="isShowProvide">
         <fieldset class="form-group">
           <label>Service Name</label>
-          <input type="serviceName" class="form-control" placeholder="Enter Service Name" ng-model="field.serviceName">
+			 <select ng-model="field.serviceName" ng-options="item.serviceName for item in listServices">
+			 </select>
         </fieldset>
 
         <fieldset class="form-group">
