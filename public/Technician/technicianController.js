@@ -113,5 +113,12 @@ app.controller('technicianController', ['$scope', '$state','logService', '$http'
        .then(function(){state.reload()})
        .catch(function(err){noDlg.show(scope, err, "Error")});
     }
-
+	scope.deleteService = function(id){
+      console.log("In Tech delete function\n");
+      http.delete("Serv/" + id + "/Order")
+      .then(function(){
+          state.reload();
+      })
+      .catch(function(err){noDlg.show(scope, err, "Error")});
+    }
 }]);
