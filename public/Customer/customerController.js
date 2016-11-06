@@ -4,41 +4,55 @@ app.controller('customerController', ['$scope', '$state','registerPopService', '
       NONE: 0,
       PERSONAL: 1,
       SERVICES: 2,
-      HISTORY: 3
+      HISTORY: 3,
+		SERVOFFER: 4
     };
 
     scope.isShowPersonalField = 0;
     scope.isShowListServices = 0;
+	 scope.isShowServiceOfferField = 0;
     scope.isShowOrderHistory = 0;
     scope.listServices = [];
+	 scope.offerServices=[];
     scope.field = {};
     scope.hists = [];
 
     scope.switchView = function(newView) {
+		 console.log("switchview");
       switch (newView) {
         case scope.viewEnum.NONE:
           scope.isShowPersonalField = 0;
           scope.isShowListServices = 0;
+			 scope.isShowServiceOfferField = 0;
           scope.isShowOrderHistory = 0;
           break;
         case scope.viewEnum.PERSONAL:
           scope.isShowPersonalField = 1;
           scope.isShowListServices = 0;
+			 scope.isShowServiceOfferField = 0;
           scope.isShowOrderHistory = 0;
           break;
         case scope.viewEnum.SERVICES:
           scope.isShowListServices = 1;
+			 scope.isShowServiceOfferField = 1;
           scope.isShowPersonalField = 0;
           scope.isShowOrderHistory = 0;
+          break;
+		  case scope.viewEnum.SERVOFFER:
+          scope.isShowOrderHistory = 0;
+          scope.isShowListServices = 0;
+			 scope.isShowServiceOfferField = 1;
+          scope.isShowPersonalField = 0;
           break;
         case scope.viewEnum.HISTORY:
           scope.isShowOrderHistory = 1;
           scope.isShowListServices = 0;
+			 scope.isShowServiceOfferField = 0;
           scope.isShowPersonalField = 0;
           break;
       }
     }
-
+	
     scope.modifyCustomer = function(){
       if (scope.isShowPersonalField == 0) {
         scope.switchView(scope.viewEnum.PERSONAL);
@@ -48,6 +62,8 @@ app.controller('customerController', ['$scope', '$state','registerPopService', '
     }
 
     scope.showOrderHistory = function(){
+		  console.log("showOrderHistory==1");
+
         if (scope.isShowOrderHistory == 1) {
           scope.switchView(scope.viewEnum.NONE);
         } else {
@@ -80,21 +96,28 @@ app.controller('customerController', ['$scope', '$state','registerPopService', '
         .catch(function(err){noDlg.show(scope, err, "Error")});
     }
 
-    scope.deleteCustomer = function(){
-
-      http.delete("User/" + rscope.loggedUser.id)
-      .then(function(){
-          state.go('home');
-          logSer.logout();
-      })
-      .catch(function(err){noDlg.show(scope, err, "Error")});
+    //Deletes customer account
+    scope.deleteCustomer = function () {
+        //Asks for deletion confirmation
+        if (window.confirm("Are you sure you want to delete your account?"))
+        {
+            http.delete("User/" + rscope.loggedUser.id)
+            .then(function () {
+                state.go('home');
+                logSer.logout();
+            })
+            .catch(function (err) { noDlg.show(scope, err, "Error") });
+        }
     }
 
     scope.showListServices = function(){
-      if (scope.isShowListServices == 1) {
+		console.log("isShowServiceOfferField ");
+      if (scope.isShowServiceOfferField == 1) {
+			console.log("isShowServiceOfferField==1 ");
         scope.switchView(scope.viewEnum.NONE);
       } else {
-        scope.switchView(scope.viewEnum.SERVICES);
+			console.log("isShowServiceOfferField!=1 ");
+        scope.switchView(scope.viewEnum.SERVOFFER);
         http.get('Serv/')
         .then(function(response) {
            scope.listServices = response.data;
@@ -102,4 +125,20 @@ app.controller('customerController', ['$scope', '$state','registerPopService', '
         .catch(function(err){noDlg.show(scope, err, "Error")});
       }
     }
+	  scope.changedValue = function(item){
+		 console.log("changedValue: i= "+ item.id);
+		 if (scope.isShowServiceOfferField == 1) {
+			console.log("isShowServiceOfferField==1 ");
+			scope.switchView(scope.viewEnum.SERVICES);
+			http.get('Serv/'+ item.id +'/Services')
+        .then(function(response) {
+           scope.offerServices = response.data;
+        })
+        .catch(function(err){noDlg.show(scope, err, "Error")});
+       
+      } else {
+			console.log("isShowServiceOfferField!=1 ");
+			scope.switchView(scope.viewEnum.NONE);
+      }
+	 }
 }])

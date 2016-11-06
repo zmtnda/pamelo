@@ -53,13 +53,7 @@ SHOW WARNINGS;*/
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS Services (
   id INT(11) AUTO_INCREMENT PRIMARY KEY,
-  serviceName VARCHAR(500) NOT NULL);
--- -----------------------------------------------------
--- Table services offer by technicians
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS ServicesOffer (
-  id INT(11) AUTO_INCREMENT PRIMARY KEY,
-  serviceId INT(11) NULL ,
+  serviceName VARCHAR(500) NOT NULL ,
   amount FLOAT NOT NULL DEFAULT 0.00 ,
   status int NOT NULL DEFAULT 0 ,
   timestamp DATETIME NOT NULL ,
@@ -70,17 +64,11 @@ CREATE  TABLE IF NOT EXISTS ServicesOffer (
     REFERENCES Users (id )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-	 CONSTRAINT fkServices
-    FOREIGN KEY (serviceId)
-    REFERENCES Services (id )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
   CONSTRAINT fkServicesTechnicians
     FOREIGN KEY (technicianId )
     REFERENCES Users (id )
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-  
 -- -----------------------------------------------------
 -- Table technicians
 -- -----------------------------------------------------
@@ -97,7 +85,7 @@ CREATE  TABLE IF NOT EXISTS serviceHistory (
     ON UPDATE CASCADE,
 	CONSTRAINT fkHistoryServices
 	 FOREIGN KEY (serviceId)
-    REFERENCES ServicesOffer (serviceId)
+    REFERENCES Services (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 	CONSTRAINT fkHistoryUsers1
@@ -105,3 +93,75 @@ CREATE  TABLE IF NOT EXISTS serviceHistory (
     REFERENCES Users (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
+-----
+-- -----------------------------------------------------
+-- Table users
+-- -----------------------------------------------------
+INSERT INTO Users
+(id, email, password, role, firstName, lastName, phone, whenRegistered)
+VALUES (2, "cust1@11.com", "password", 0, "I am", "customer1", 123456789, NOW());
+
+INSERT INTO Users
+(id, email, password, role, firstName, lastName, phone, whenRegistered)
+VALUES (3, "cust2@11.com", "password", 0, "I am", "customer2", 123456789, NOW());
+
+INSERT INTO Users
+(id, email, password, role, firstName, lastName, phone, whenRegistered)
+VALUES (4, "tech@11.com", "password", 1, "I am", "technician", 123456789, NOW());
+
+INSERT INTO Users
+(id, email, password, role, firstName, lastName, phone, whenRegistered)
+VALUES (5, "tech2@11.com", "password", 1, "I am", "technician2", 123456789, NOW());
+-- -----------------------------------------------------
+-- Table services
+-- -----------------------------------------------------
+INSERT INTO Services
+(id,serviceName)
+VALUES (1, "Home wireless support");
+
+INSERT INTO Services
+(id,serviceName)
+VALUES (2, "Smart phone screen replacement");
+
+INSERT INTO Services
+(id,serviceName)
+VALUES (3, "Laptop screen replacement");
+
+INSERT INTO Services
+(id,serviceName)
+VALUES (4, "Business network setup");
+
+INSERT INTO Services
+(id,serviceName)
+VALUES (5, "Keyboard replacement");
+
+INSERT INTO Services
+(id,serviceName)
+VALUES (6, "Battery replacement");
+-- -----------------------------------------------------
+-- Table services offer
+-- -----------------------------------------------------
+INSERT INTO ServicesOffer
+(id,serviceName,amount, status,timestamp,technicianId)
+VALUES (1, "Home Wireless Support", 200.00, 0, NOW(),4);
+
+INSERT INTO ServicesOffer
+(id,serviceName,amount, status,timestamp,technicianId)
+VALUES (2, "Screen Replacement", 70.00, 0, NOW(),4);
+
+INSERT INTO ServicesOffer
+(id,serviceName,amount, status,timestamp,technicianId)
+VALUES (3, "Battery Replacement", 40.00, 0, NOW(),4);
+
+INSERT INTO ServicesOffer
+(id,serviceName,amount, status,timestamp,technicianId)
+VALUES (4, "Home Wireless Support", 180.00, 0, NOW(),5);
+
+INSERT INTO ServicesOffer
+(id,serviceName,amount, status,timestamp,technicianId)
+VALUES (5, "Screen Replacement", 60.00, 0, NOW(),5);
+
+INSERT INTO ServicesOffer
+(id,serviceName,amount, status,timestamp,technicianId)
+VALUES (6, "Battery Replacement", 30.00, 0, NOW(),5);
+
