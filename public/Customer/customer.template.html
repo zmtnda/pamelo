@@ -43,17 +43,17 @@
 			  </div>
 		  </div>
         <br/>
-    </div>  
+    </div>
 
 
      <!-- SHOW ALL ORDER HISTORY -->
     <div class="thumbnail" ng-if="isShowOrderHistory">
         <h4>My Past Orders</h4><br/>
          <div ng-repeat="hist in hists" class="alert alert-warning" role="alert">
-             <h8>History id: </h8>{{hist.id}}<br/>
-             <h8>User Id: </h8>{{hist.userId}}<br/>
-             <h8>Technician Id: </h8>{{hist.technicianId}}<br/>
-             <h8>Service Id: </h8>{{hist.serviceId}}<br/>
+             <h8>Service Name: </h8>{{hist.serviceName}}<br/>
+             <h8>Technician Name: </h8>{{hist.firstName}} {{hist.lastName}}<br/>
+             <h8>Technician Email: </h8>{{hist.email}}<br/>
+             <h8>Technician Phone: </h8>{{hist.phone}}<br/>
              <h8>Date and Time </h8>{{hist.whenCompleted}}<br/>
              <br/>
          </div>
