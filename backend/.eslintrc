@@ -1,0 +1,25 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:import/errors"
+  ],
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  },
+  "rules": {
+    "semi": 2,
+    "no-use-before-define": 0,
+    "arrow-body-style": 0,
+    "dot-notation": 0,
+    "no-console": 0
+  }
+}
