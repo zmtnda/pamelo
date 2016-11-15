@@ -68,4 +68,3 @@ VALUES (5, 2, 60.00, 0, NOW(),5);
 INSERT INTO ServicesOffer
 (id,serviceId,amount, status,timestamp,technicianId)
 VALUES (6, 6, 30.00, 0, NOW(),5);
-
