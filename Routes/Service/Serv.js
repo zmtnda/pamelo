@@ -72,7 +72,7 @@ router.get('/:techId', function(req, res) {
 
 	if(vld.checkPrsOK(techId, Tags.noPermission)){
 		connections.getConnection(res, function(cnn) {
-			cnn.query(' SELECT * FROM ServicesOffer T1 JOIN Services T2 '
+			cnn.query(' SELECT *' + formatDate + ' FROM ServicesOffer T1 JOIN Services T2 '
 			+ ' WHERE T1.serviceId = T2.id  AND technicianId = ? ', techId,
 			function(err, result){
 				if(!err){
