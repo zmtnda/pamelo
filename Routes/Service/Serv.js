@@ -5,6 +5,7 @@ var Tags = require('../Validator.js').Tags;
 var router = Express.Router({caseSensitive: true});
 var async = require('async');
 router.baseURL = '/Serv';
+var formatDate = ', DATE_FORMAT(timestamp, \'\%b \%d \%Y \%h\:\%i \%p\') as formatDate';
 
 // Begin '/Serv/' functions
 
@@ -30,7 +31,7 @@ router.get('/', function(req, res) {
 		});
 	}
 });
-// Retrieve all the technician and associated services 
+// Retrieve all the technician and associated services
 // based on the service chosen
 router.get('/:servId/Services', function(req, res) {
 	var vld = req.validator;
@@ -39,7 +40,7 @@ router.get('/:servId/Services', function(req, res) {
 	console.log("get from ServicesOffer");
 	if(vld.check(user, Tags.noPermission)){
 		connections.getConnection(res, function(cnn) {
-			cnn.query(' SELECT * FROM ServicesOffer WHERE serviceId = ? ', servId,
+			cnn.query(' SELECT *' + formatDate + ' FROM ServicesOffer WHERE serviceId = ? ', servId,
 			function(err, result){
 				if(!err){
 					res.json(result);
@@ -212,7 +213,7 @@ router.delete('/:servId/Order', function(req, res) {
 	connections.getConnection(res, function(cnn) {
 		cnn.query(' SELECT * FROM ServicesOffer WHERE id = ? ', servId,
 			function(err, result){
-				if(result.length ){ 
+				if(result.length ){
 					if(result[0].status == 1){
 						if(vld.checkAdmin() || loginId){
 							//continue to delete the following query

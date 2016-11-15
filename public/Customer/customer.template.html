@@ -36,10 +36,12 @@
 		  </select>
 		  <div class="thumbnail" ng-if="isShowListServices">
 			  <div ng-repeat="ser in offerServices" class="list-group-item">
-					<h8>Service Name: </h8>{{ser.serviceName}}<br/>
 					<h8>Price: </h8>${{ser.amount}}<br/>
+          <h8>Technician: </h8>{{tech[$index]}}<br/>
+          <h8>Posted on: </h8>{{ser.formatDate}}<br/>
 					<br/>
 					<button type="button" class="btn btn-primary" ng-click="order(ser.id)">Order</button>
+        </div>
 			  </div>
 		  </div>
         <br/>
@@ -54,7 +56,7 @@
              <h8>Technician Name: </h8>{{hist.firstName}} {{hist.lastName}}<br/>
              <h8>Technician Email: </h8>{{hist.email}}<br/>
              <h8>Technician Phone: </h8>{{hist.phone}}<br/>
-             <h8>Date and Time </h8>{{hist.whenCompleted}}<br/>
+             <h8>Date and Time: </h8>{{hist.formatDate}}<br/>
              <br/>
          </div>
     </div>
