@@ -46,7 +46,7 @@
          <div ng-repeat="ser in listServices" class="alert alert-warning" role="alert">
                 <h4>serviceName: </h4>{{ser.serviceName}}</br></br>
                 <h4>status: </h4>{{ser.status}}</br></br>
-                <h4>timestamp: </h4>{{ser.timestamp}}</br></br>
+                <h4>timestamp: </h4>{{ser.formatDate}}</br></br>
                 <button type="button" class="btn btn-primary" ng-click="deleteService(ser.id)">Delete Service</button>
          </div>
     </div>
