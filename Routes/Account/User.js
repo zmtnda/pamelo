@@ -56,7 +56,7 @@ router.get('/', function(req, res) {
 
       if(req.query.soFull)
       {
-        cnn.query('SELECT * FROM Users', function(err, prsArr){
+        cnn.query('SELECT *' + formatDate + ' FROM Users', function(err, prsArr){
           res.json(prsArr); // array notation to grab first person.
           cnn.release();
 
