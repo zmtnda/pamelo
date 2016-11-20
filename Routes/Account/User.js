@@ -3,6 +3,7 @@ var connections = require('../Connections.js');
 var Tags = require('../Validator.js').Tags;
 var router = Express.Router({caseSensitive: true});
 router.baseURL = '/User';
+var formatDate = ', DATE_FORMAT(whenRegistered, \'\%b \%d \%Y \%h\:\%i \%p\') as formatDate';
 
 
 router.get('/serviceHistory/all', function(req, res) {
@@ -17,7 +18,7 @@ router.get('/serviceHistory/all', function(req, res) {
          //qry = 'SELECT serviceHistory.*, y.serviceName FROM serviceHistory x JOIN Services y where x.userId = ? AND y.id = x.serviceID';
          //qry = 'select x.*, y.serviceName from serviceHistory x join services y where x.userId = ? AND x.serviceID = y.id';
          //qry = 'select x.*, y.serviceName from serviceHistory x join services y where x.userId = ? AND x.serviceID = y.id';
-         qry = 'select x.*, y.*, z.serviceName from serviceHistory x join Users y join Services z where x.userId = ? AND x.technicianId = y.id AND x.serviceID = z.id';
+         qry = 'select x.*, y.*, z.serviceName' + formatDate + ' from serviceHistory x join Users y join Services z where x.userId = ? AND x.technicianId = y.id AND x.serviceID = z.id';
          qryParams = req.session.id;
          cnn.query(qry, qryParams, function(err, response) {
             if (err) {
@@ -43,7 +44,6 @@ router.get('/serviceHistory/all', function(req, res) {
 router.get('/', function(req, res) {
    var specifier = req.query.email || !req.session.isAdmin() && req.session.email;
    var getAllBasedEmail = req.query.all;
-
    connections.getConnection(res, function(cnn) {
       var handler = function(err, prsArr) {
          res.json(prsArr[0]); // array notation to grab first person.
@@ -56,7 +56,7 @@ router.get('/', function(req, res) {
 
       if(req.query.soFull)
       {
-        cnn.query("SELECT * FROM Users", function(err, prsArr){
+        cnn.query('SELECT *' + formatDate + ' FROM Users', function(err, prsArr){
           res.json(prsArr); // array notation to grab first person.
           cnn.release();
 
@@ -279,5 +279,23 @@ router.post('/:id/Serv', function(req, res) {
          });
       }
 });
+
+  // Allow user, |id|, to retrieve the name of another user in the database using their id, |otherId|.
+  router.get('/:id/:otherId/Name', function(req, res) {
+     var vld = req.validator;
+     //check valid user
+     if (vld.checkPrsOK(req.params.id)) {
+        connections.getConnection(res, function(cnn) {
+           cnn.query('SELECT firstName, lastName FROM Users WHERE id = ?', req.params.otherId, function(err, result) {
+              if(err) {
+                 res.status(400).json(err); // ends response
+              } else if (vld.check(result.length, Tags.notFound)) {
+                 res.json(result[0]); // ends response
+              }
+           });
+           cnn.release();
+        });
+     }
+  });
 
 module.exports = router;

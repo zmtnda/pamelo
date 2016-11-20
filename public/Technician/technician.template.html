@@ -31,11 +31,10 @@
       <!-- SHOW PROMPTING SERIVCES-->
       <div class="thumbnail" ng-if="isShowProvide">
           <fieldset class="form-group">
-            <label>Service Name</label>
-  			 <select ng-model="field.serviceName" ng-options="item.serviceName for item in listServices">
-  			 </select>
+             <label>Service Name</label>
+      			 <select ng-model="field.serviceName" ng-options="item.serviceName for item in listServices">
+      			 </select>
           </fieldset>
-
           <fieldset class="form-group">
             <label>Amount</label>
             <input type="amount" class="form-control" placeholder="Amount" ng-model="field.amount">
@@ -59,7 +58,7 @@
                  <tr ng-repeat="ser in listServices">
                    <td>{{ser.serviceName}}</td>
                    <td>{{ser.status}}</td>
-                   <td>{{ser.timestamp}}</td>
+                   <td>{{ser.formatDate}}</td>
                    <td>
                      <button type="button" class="btn btn-primary" ng-click="deleteService(ser.id)">Delete</button>
                    </td>
