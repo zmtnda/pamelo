@@ -10,10 +10,10 @@ app.controller('customerController', ['$scope', '$state','registerPopService', '
 
     scope.isShowPersonalField = 0;
     scope.isShowListServices = 0;
-	 scope.isShowServiceOfferField = 0;
+	  scope.isShowServiceOfferField = 0;
     scope.isShowOrderHistory = 0;
     scope.listServices = [];
-	 scope.offerServices=[];
+	  scope.offerServices=[];
     scope.field = {};
     scope.hists = [];
 
@@ -52,7 +52,7 @@ app.controller('customerController', ['$scope', '$state','registerPopService', '
           break;
       }
     }
-	
+
     scope.modifyCustomer = function(){
       if (scope.isShowPersonalField == 0) {
         scope.switchView(scope.viewEnum.PERSONAL);
@@ -135,7 +135,7 @@ app.controller('customerController', ['$scope', '$state','registerPopService', '
            scope.offerServices = response.data;
         })
         .catch(function(err){noDlg.show(scope, err, "Error")});
-       
+
       } else {
 			console.log("isShowServiceOfferField!=1 ");
 			scope.switchView(scope.viewEnum.NONE);

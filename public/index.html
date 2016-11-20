@@ -30,7 +30,7 @@
 <script src="Util/registerController.js"></script>
 <script src="ui-routes.js"></script>
 
-<body ng-app="mainApp" class="container" style="width:100%">
+<body ng-app="mainApp" class="container" style="width:100%;">
   <div ng-controller="homeController">
         <header class = "navbar-inverse">
     			<div class = "container">
@@ -61,7 +61,9 @@
     				</nav>
     			</div>
     		</header>
-    <ui-view/>
+        <div>
+          <ui-view/>
+        </div>
   </div>
 </body>
 </html>
