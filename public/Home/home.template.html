@@ -30,9 +30,11 @@
                               document.getElementById('submit').click()" placeholder="Password" ng-model="user.password">
                 </fieldset>
 
-              <button type="button" id="submit" class="btn btn-lg btn-default btn-block" ng-click="login()">Sign In</button>
 
-      				<button class="btn btn-lg btn-default btn-block" ng-click="addUser()">Please Sign Up if you don't have an account</button>
+
+              <button type="button" id="submit" class="btn btn-lg btn-default btn-block" ng-click="login()">Sign In</button>
+              <button type="button" class="btn btn-lg btn-default btn-block" ng-click="addUser()">Please Sign Up if you don't have an account</button>
+
               </form>
               <div ng-if="inSession">
                   <button type="button" class="btn btn-primary" ng-click="goMain(loggedUser.role)">Mange Account</button>
