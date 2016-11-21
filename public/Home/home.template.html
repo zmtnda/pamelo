@@ -1,24 +1,45 @@
+<script src="../css/jquery-1.11.3.min.js"></script>
+<link rel="stylesheet" href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css">
+<link rel="stylesheet" href="../css/index.css">
+
 <div class = "jumbotron">
-    <image style="width:100%;" src="../images/pomelo2.jpg"></image>
+    <div class = "container-fluid first-slide">
+      <h1>Find a technician</h1>
+      <p>Find the best technician in San Luis Obispo</p>
+      <p>Fix computer in Cal Poly SLO</p>
+      <blockquote class = "quote">
+        <p>Fixing a computer is super easy for Pomelo Tech</p>
+      <footer>Pomelo Tech</footer>
+      </blockquote>
+    </div>
     <br/>
-    <div>
-        <form ng-if="!inSession">
-          <fieldset class="form-group">
-            <label>Email address</label>
-            <input type="email" class="form-control" placeholder="Enter email" ng-model="user.email">
-          </fieldset>
-          <fieldset class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" onkeydown = "if (event.keyCode == 13)
-                        document.getElementById('submit').click()" placeholder="Password" ng-model="user.password">
-          </fieldset>
+    <div class = "container-fluid sign-in">
+      <div class = "row">
+        <div class = "col-md-12">
+          <div class="panel panel-primary">
+            <div class="panel-body">    <!--The following div is for sign-in and sign-up session-->
+              <form ng-if="!inSession" class="form-signin">
+                <fieldset class="form-group">
+                  <h2 class="form-signin-heading">Please sign in</h2>
+                  <label for="inputEmail" class="sr-only">Email address</label>
+                  <input type="email" class="form-control" placeholder="Enter email" ng-model="user.email">
+                </fieldset>
+                <fieldset class="form-group">
+                  <label for="inputPassword" class="sr-only">Password</label>
+                  <input type="password" class="form-control" onkeydown = "if (event.keyCode == 13)
+                              document.getElementById('submit').click()" placeholder="Password" ng-model="user.password">
+                </fieldset>
 
-        <button type="button" id="submit" class="btn btn-primary" ng-click="login()">Sign In</button>
+              <button type="button" id="submit" class="btn btn-lg btn-default btn-block" ng-click="login()">Sign In</button>
 
-				<button class="btn btn-link" ng-click="addUser()">Please Sign Up if you don't have an account</button>
-        </form>
-        <div ng-if="inSession">
-            <button type="button" class="btn btn-primary" ng-click="goMain(loggedUser.role)">Mange Account</button>
+      				<button class="btn btn-lg btn-default btn-block" ng-click="addUser()">Please Sign Up if you don't have an account</button>
+              </form>
+              <div ng-if="inSession">
+                  <button type="button" class="btn btn-primary" ng-click="goMain(loggedUser.role)">Mange Account</button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 </div>
