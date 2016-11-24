@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GMS</title>
+</head>
+<link rel="stylesheet" href="css/index.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+ integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="ngCss/ngCss.css" type="text/css"/>
+<link rel="stylesheet" href="css/Customer/cust.css" type="text/css"/>
+<link rel="stylesheet" href="Util/cssFiles/regTmp.css" type="text/css"/>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>
+<script src="techapp.js"></script>
+
+
+<script src="Home/homeController.js"></script>
+<script src="Customer/customerController.js"></script>
+<script src="Technician/technicianController.js"></script>
+<script src="Util/dialogService.js"></script>
+<script src="Util/logService.js"></script>
+<script src="Util/registerPop.js"></script>
+<script src="Util/goToServices.js"></script>
+<script src="Admin/adminController.js"></script>
+<script src="Util/registerController.js"></script>
+<script src="ui-routes.js"></script>
+
+<body ng-app="mainApp" class="container" style="width:100%;">
+  <div ng-controller="homeController">
+        <header class = "navbar-inverse">
+    			<div class = "container">
+    				<nav class="navbar navbar-inverse navbar-fixed-top">
+    				  <div class="container-fluid">
+    					<!-- Brand and toggle get grouped for better mobile display -->
+      					<div class="navbar-header">
+      					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+      						<span class="sr-only">Toggle navigation</span>
+      						<span class="icon-bar"></span>
+      						<span class="icon-bar"></span>
+      						<span class="icon-bar"></span>
+      					  </button>
+      					  <a class="navbar-brand">Pomelo Tech</a>
+                  <a class="navbar-brand" ng-if="inSession">{{loggedUser.email}} </br> <span ng-if="inSession">Hi Mr./Ms. {{loggedUser.lastName | uppercase}}</span> </a>
+      					</div>
+      					<!-- Collect the nav links, forms, and other content for toggling -->
+      					<div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
+      					  <ul class="nav navbar-nav">
+                    <li class="active" role="presentation" ng-click="retnHm()"><a href="#">Home</a></li>
+                    <li role="presentation" ng-if="inSession" ng-click="logout()"><a href="#">Logout</a></li>
+        						<li role="presentation"><a href="about_us.html">About Us</a></li> <!--TODO-->
+                    <li role="presentation"><a href="https://docs.google.com/forms/d/1N1yCBjDKHL5MWz1AoMRSwKthJza7xi7KPRRWh2k6fYo/viewform?embedded=true">Give Us Your Opinion</a></li>
+                    <li role="presentation"><a href="#">Terms and Conditions</a></li><!--TODO-->
+      					  </ul>
+      					</div>
+    				  </div>
+    				</nav>
+    			</div>
+    		</header>
+        <div>
+          <ui-view/>
+        </div>
+  </div>
+</body>
+</html>
