@@ -3,19 +3,19 @@
 -- -----------------------------------------------------
 INSERT INTO Users
 (id, email, password, role, firstName, lastName, phone, whenRegistered)
-VALUES (2, "cust1@11.com", "password", 0, "I am", "customer1", 123456789, NOW());
+VALUES (2, "cust1@11.com", "$2a$10$f4O3XDNgIRZ6KtTpMNuCUuzVFGNFklC6s/QLAe.Fwki6AaQW.T4Iq", 0, "I am", "customer1", 123456789, NOW());
 
 INSERT INTO Users
 (id, email, password, role, firstName, lastName, phone, whenRegistered)
-VALUES (3, "cust2@11.com", "password", 0, "I am", "customer2", 123456789, NOW());
+VALUES (3, "cust2@11.com", "$2a$10$exCXTVzdrrglWd6mIEv.k.ii1FHUfj.yD7vi5DkF16o1513obfmna", 0, "I am", "customer2", 123456789, NOW());
 
 INSERT INTO Users
 (id, email, password, role, firstName, lastName, phone, whenRegistered)
-VALUES (4, "tech1@11.com", "password", 1, "I am", "technician1", 123456789, NOW());
+VALUES (4, "tech1@11.com", "$2a$10$viQOO.7qFTDD6z1BCvbDHuMKQO8idMV3gezZkmXyx/RNblZueckYG", 1, "I am", "technician1", 123456789, NOW());
 
 INSERT INTO Users
 (id, email, password, role, firstName, lastName, phone, whenRegistered)
-VALUES (5, "tech2@11.com", "password", 1, "I am", "technician2", 123456789, NOW());
+VALUES (5, "tech2@11.com", "$2a$10$RCjrl1GZEBulbCL799/y0O.uMfijYpOoWyv4D5rZYAx4gZ.m6I2B.", 1, "I am", "technician2", 123456789, NOW());
 -- -----------------------------------------------------
 -- Table services
 -- -----------------------------------------------------

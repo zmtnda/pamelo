@@ -3,6 +3,7 @@ var connections = require('../Connections.js');
 var Tags = require('../Validator.js').Tags;
 var ssnUtil = require('../Session.js');
 var router = Express.Router({caseSensitive: true});
+var bcrypt = require('bcrypt');
 
 router.baseURL = '/Ssns';
 
@@ -41,7 +42,7 @@ router.post('/', function(req, res) {
 
    connections.getConnection(res, function(cnn) {
       cnn.query('select * from Users where email = ?', [req.body.email], function(err, result) {
-         if (req.validator.check(result.length  && result[0].password === req.body.password, Tags.badLogin)) {
+         if (req.validator.check(result.length  && bcrypt.compareSync(req.body.password, result[0].password), Tags.badLogin)) {
             cookie = ssnUtil.makeSession(result[0], res);
             res.location(router.baseURL + '/'  + cookie).end();
          }
