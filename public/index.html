@@ -15,14 +15,18 @@
   <link href="css/home/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
+  <!--boostrap linking: -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <!--Custome css linking: -->
   <link rel="stylesheet" href="ngCss/ngCss.css" type="text/css"/>
   <link rel="stylesheet" href="css/Customer/cust.css" type="text/css"/>
   <link rel="stylesheet" href="Util/cssFiles/regTmp.css" type="text/css"/>
 
+  <!--Main app creation: -->
   <script src="techapp.js"></script>
 
-
+  <!--links to controllers: -->
   <script src="Home/homeController.js"></script>
   <script src="Customer/customerController.js"></script>
   <script src="Technician/technicianController.js"></script>
@@ -32,8 +36,9 @@
   <script src="Util/goToServices.js"></script>
   <script src="Admin/adminController.js"></script>
   <script src="Util/registerController.js"></script>
-  <script src="ui-routes.js"></script>
 
+  <!--Create routes to templates: -->
+  <script src="ui-routes.js"></script>
 
   <header class = "navbar-inverse">
     <meta charset="utf-8">
@@ -41,9 +46,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>PomeloTech - find your technicians</title>
 
+    <!--Nagvigation bar: -->
     <div class = "container">
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
@@ -73,6 +78,7 @@
     </div>
   </header>
 
+  <!--Children's views: -->
   <ui-view/>
 
 </html>
