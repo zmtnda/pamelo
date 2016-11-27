@@ -2,13 +2,21 @@
   <div class="row">
     <div class="col-sm-1 col-md-2 sidebar">
         <ul class="nav nav-sidebar">
-          <li><button type="button" class="btn" ng-class="isShowServiceOfferField | btnState" ng-click="showListServices()">Order a Service</button></li>
+          <li>
+            <h4>Order a Service</h4>
+            <button type="button" class="btn" ng-class="isShowServiceOfferField | btnState" ng-click="showListServices()">Order</button></li>
           <li></br></li>
-          <li><button type="button" class="btn" ng-class="isShowOrderHistory | btnState" ng-click="showOrderHistory()">Shor Order History</button></li>
+          <li>
+            <h4>View Order History</h4>
+            <button type="button" class="btn" ng-class="isShowOrderHistory | btnState" ng-click="showOrderHistory()">Order History</button></li>
           <li></br></li>
-          <li><button type="button" class="btn" ng-class="isShowPersonalField | btnState" ng-click="modifyCustomer()">Personal Info</button></li>
+          <li>
+            <h4>Update Personal Info</h4>
+            <button type="button" class="btn" ng-class="isShowPersonalField | btnState" ng-click="modifyCustomer()">Personal Info</button></li>
           <li></br></li>
-          <li><button type="button" class="btn btn-primary" ng-click="deleteCustomer()">Delete this Account</button></li>
+          <li>
+            <h4>BYE</h4>
+            <button type="button" class="btn btn-primary" ng-click="deleteCustomer()">Delete this Account</button></li>
         </ul>
         <div ng-if="isShowServiceOfferField">
           <h4>Available Services:</h4>
