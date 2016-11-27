@@ -4,7 +4,8 @@ var Tags = require('../Validator.js').Tags;
 var router = Express.Router({caseSensitive: true});
 router.baseURL = '/User';
 var formatDate = ', DATE_FORMAT(whenRegistered, \'\%b \%d \%Y \%h\:\%i \%p\') as formatDate';
-
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 router.get('/serviceHistory/all', function(req, res) {
    var vld = req.validator;
@@ -103,6 +104,7 @@ var admin = req.session;
       .chain(body["password"], Tags.missingField)
       .check(body.role >= 0 && body.role <=2, Tags.badValue, ["role"])) {
          connections.getConnection(res, function(cnn) {
+            body.password = bcrypt.hashSync(body.password, saltRounds); // Hash passwords using Bcrypt.
             cnn.query('INSERT INTO Users SET ?', body, function(err, result) {
                if(err) {
                   res.status(400).json(err);
