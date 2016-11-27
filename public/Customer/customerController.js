@@ -75,7 +75,7 @@
 
       scope.showOrderHistory = function(){
   		  console.log("showOrderHistory==1");
-        
+
           if (scope.isShowOrderHistory == 1) {
             scope.switchView(scope.viewEnum.NONE);
           } else {
@@ -158,5 +158,4 @@
   			     scope.switchView(scope.viewEnum.NONE);
         }
   	 }
-
   }])

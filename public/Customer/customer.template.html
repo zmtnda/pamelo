@@ -1,92 +1,119 @@
-<h2 style="font-style:italic;">Customer Home Page</h2>
+<div style="background-color:#f7f7f7;">
+  <h2 style="font-style:italic;">Customer Home Page</h2>
 
-<div class="col-xs-4 col-md-4 col-lg-4">
-    <div class="thumbnail">
-        <div class="list-group">
-            <div class="list-group-item ">
-                <h4 class="list-group-item-heading">Order a Service</h4>
-                <button type="button" class="btn" ng-class="isShowServiceOfferField | btnState" ng-click="showListServices()">Order</button><br/>
-            </div>
-            </br>
-             <div class="list-group-item ">
-                <h4 class="list-group-item-heading">Order History</h4>
-                <button type="button" class="btn" ng-class="isShowOrderHistory | btnState" ng-click="showOrderHistory()">Show</button>
-            </div>
-            </br>
+  <div class="col-xs-4 col-md-4 col-lg-4">
+      <div class="thumbnail">
+          <div class="list-group">
+              <div class="list-group-item ">
+                  <h4 class="list-group-item-heading">Order a Service</h4>
+                  <button type="button" class="btn" ng-class="isShowServiceOfferField | btnState" ng-click="showListServices()">Order</button><br/>
+              </div>
+              </br>
+               <div class="list-group-item ">
+                  <h4 class="list-group-item-heading">Order History</h4>
+                  <button type="button" class="btn" ng-class="isShowOrderHistory | btnState" ng-click="showOrderHistory()">Show</button>
+              </div>
+              </br>
+              <div class="list-group-item">
+                  <h4 class="list-group-item-heading">Update Personal Info</h4>
+                  <button type="button" class="btn" ng-class="isShowPersonalField | btnState" ng-click="modifyCustomer()">Update Account</button>
+              </div>
+              </br>
+              <div class="list-group-item ">
+                  <h4 class="list-group-item-heading">BYE</h4>
+                  <button type="button" class="btn btn-primary" ng-click="deleteCustomer()">Delete this Account</button>
+              </div>
+          </div>
+      </div>
+  </div>
 
-            <div class="list-group-item">
-                <h4 class="list-group-item-heading">Update Personal Info</h4>
-                <button type="button" class="btn" ng-class="isShowPersonalField | btnState" ng-click="modifyCustomer()">Update Account</button>
-            </div>
-            </br>
-            <div class="list-group-item ">
-                <h4 class="list-group-item-heading">BYE</h4>
-                <button type="button" class="btn btn-primary" ng-click="deleteCustomer()">Delete this Account</button>
-            </div>
+  <div class="col-xs-8 col-md-8 col-lg-8">
+      <!-- SHOW SERIVCES-->
+     <div class="thumbnail" ng-if="isShowServiceOfferField">
+        <h2>Available Services:</h2>
+        <select ng-model="field.serviceName" ng-change="changedValue(field.serviceName)"
+        data-ng-options="item.serviceName for item in listServices">
+        </select>
+       <div ng-if="isShowListServices">
+        <div class="table-responsive" style="height:600px; width:100%; overflow:auto;">
+            <table class="table table-striped" border = "0" cellpadding = "0" cellspacing = "1">
+               <thead>
+                 <tr>
+                   <th>Price</th>
+                   <th>Technician</th>
+                   <th>Posted on</th>
+                   <th></th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr ng-repeat="ser in offerServices">
+                   <td>${{ser.amount}}</td>
+                   <td>{{tech[$index]}}</td>
+                   <td>{{ser.formatDate}}</td>
+                   <th>
+                     <button type="button" class="btn btn-primary" ng-click="order(ser.id)">Order</button>
+                   </th>
+                 </tr>
+               </tbody>
+             </table>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
 
-<div class="col-xs-8 col-md-8 col-lg-8">
-    <!-- SHOW SERIVCES-->
-    <div class="thumbnail" ng-if="isShowServiceOfferField">
-        <h4>Available Services</h4><br/>
-		  <select ng-model="field.serviceName" ng-change="changedValue(field.serviceName)"
-		  data-ng-options="item.serviceName for item in listServices">
-		  </select>
-		  <div class="thumbnail" ng-if="isShowListServices">
-			  <div ng-repeat="ser in offerServices" class="list-group-item">
-					<h8>Price: </h8>${{ser.amount}}<br/>
-          <h8>Technician: </h8>{{tech[$index]}}<br/>
-          <h8>Posted on: </h8>{{ser.formatDate}}<br/>
-					<br/>
-					<button type="button" class="btn btn-primary" ng-click="order(ser.id)">Order</button>
-        </div>
-			  </div>
-		  </div>
-        <br/>
-    </div>
+       <!-- SHOW ALL ORDER HISTORY -->
+      <div class="thumbnail" ng-if="isShowOrderHistory">
+          <h4>My Past Orders</h4><br/>
+           <div class="table-responsive" style="height:600px; width:100%; overflow:auto;">
+              <table class="table table-striped" border = "0" cellpadding = "0" cellspacing = "2">
+                <thead>
+                  <tr>
+                    <th>Service Name</th>
+                    <th>Technician Name</th>
+                    <th>Technician Email</th>
+                    <th>Technician Phone</th>
+                    <th>Date and Time </th>
+                  </tr>
+                </thead>
+              <tbody>
+                <tr ng-repeat="hist in hists" class="alert alert-warning" role="alert">
+                    <td>{{hist.serviceName}}</td>
+                    <td>{{hist.firstName}} {{hist.lastName}}</td>
+                    <td>{{hist.email}}</td>
+                    <td>{{hist.phone}}</td>
+                    <td>{{hist.whenCompleted}}</td>
+                </tr>
+              </tbody>
+              </table>
+           </div>
+      </div>
 
+      <!-- SHOW PROMPTING USER'S NEW INFO-->
+      <div class="thumbnail" ng-if="isShowPersonalField">
+          <fieldset class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" placeholder="Enter New Email" ng-model="user.email">
+          </fieldset>
 
-     <!-- SHOW ALL ORDER HISTORY -->
-    <div class="thumbnail" ng-if="isShowOrderHistory">
-        <h4>My Past Orders</h4><br/>
-         <div ng-repeat="hist in hists" class="alert alert-warning" role="alert">
-             <h8>Service Name: </h8>{{hist.serviceName}}<br/>
-             <h8>Technician Name: </h8>{{hist.firstName}} {{hist.lastName}}<br/>
-             <h8>Technician Email: </h8>{{hist.email}}<br/>
-             <h8>Technician Phone: </h8>{{hist.phone}}<br/>
-             <h8>Date and Time: </h8>{{hist.formatDate}}<br/>
-             <br/>
-         </div>
-    </div>
+          <fieldset class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" placeholder="Password" ng-model="user.password">
+          </fieldset>
 
-    <!-- SHOW PROMPTING USER'S NEW INFO-->
-    <div class="thumbnail" ng-if="isShowPersonalField">
-        <fieldset class="form-group">
-          <label>Email</label>
-          <input type="email" class="form-control" placeholder="Enter New Email" ng-model="user.email">
-        </fieldset>
+          <fieldset class="form-group">
+            <label>First Name</label>
+            <input type="firstName" class="form-control" placeholder="Enter first name" ng-model="user.firstName">
+          </fieldset>
 
-        <fieldset class="form-group">
-          <label>Password</label>
-          <input type="password" class="form-control" placeholder="Password" ng-model="user.password">
-        </fieldset>
+          <fieldset class="form-group">
+            <label>Last Name</label>
+            <input type="lastName" class="form-control" placeholder="Enter last name" ng-model="user.lastName">
+          </fieldset>
 
-        <fieldset class="form-group">
-          <label>First Name</label>
-          <input type="firstName" class="form-control" placeholder="Enter first name" ng-model="user.firstName">
-        </fieldset>
-
-        <fieldset class="form-group">
-          <label>Last Name</label>
-          <input type="lastName" class="form-control" placeholder="Enter last name" ng-model="user.lastName">
-        </fieldset>
-
-        <fieldset class="form-group">
-          <label>Phone</label>
-          <input type="phone" class="form-control" placeholder="Enter phone name" ng-model="user.phone">
-        </fieldset>
-        <button type="button" class="btn btn-primary" ng-click="postModify()">POST</button>
-    </div>
+          <fieldset class="form-group">
+            <label>Phone</label>
+            <input type="phone" class="form-control" placeholder="Enter phone name" ng-model="user.phone">
+          </fieldset>
+          <button type="button" class="btn btn-primary" ng-click="postModify()">POST</button>
+      </div>
+  </div>
 </div>
