@@ -4,7 +4,7 @@ var Tags = require('../Validator.js').Tags;
 var router = Express.Router({caseSensitive: true});
 router.baseURL = '/User';
 var formatDate = ', DATE_FORMAT(whenRegistered, \'\%b \%d \%Y \%h\:\%i \%p\') as formatDate';
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 router.get('/serviceHistory/all', function(req, res) {

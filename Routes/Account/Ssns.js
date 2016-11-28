@@ -3,7 +3,7 @@ var connections = require('../Connections.js');
 var Tags = require('../Validator.js').Tags;
 var ssnUtil = require('../Session.js');
 var router = Express.Router({caseSensitive: true});
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 router.baseURL = '/Ssns';
 
