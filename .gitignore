@@ -1,5 +1,6 @@
 node_modules/
 ~*
-exampleConnection.json 
+exampleConnection.json
 connection.json
 *.log
+*.DS_Store
