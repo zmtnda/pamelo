@@ -3,7 +3,8 @@ var connections = require('../Connections.js');
 var Tags = require('../Validator.js').Tags;
 var router = Express.Router({caseSensitive: true});
 router.baseURL = '/User';
-var formatDate = ', DATE_FORMAT(whenRegistered, \'\%b \%d \%Y \%h\:\%i \%p\') as formatDate';
+
+var formatDate = ', DATE_FORMAT(whenCompleted, \'\%b \%d \%Y \%h\:\%i \%p\') as formatDate';
 var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
