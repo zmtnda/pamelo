@@ -63,6 +63,7 @@
                   <thead>
                     <tr>
                       <th>Service Name</th>
+                      <th>Price</th>
                       <th>Technician Name</th>
                       <th>Technician Email</th>
                       <th>Technician Phone</th>
@@ -72,6 +73,7 @@
                 <tbody>
                   <tr ng-repeat="hist in hists" class="alert alert-warning" role="alert">
                       <td>{{hist.serviceName}}</td>
+                      <td>${{hist.amount}}</td>
                       <td>{{hist.firstName}} {{hist.lastName}}</td>
                       <td>{{hist.email}}</td>
                       <td>{{hist.phone}}</td>

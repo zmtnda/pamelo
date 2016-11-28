@@ -19,7 +19,7 @@ router.get('/serviceHistory/all', function(req, res) {
          //qry = 'SELECT serviceHistory.*, y.serviceName FROM serviceHistory x JOIN Services y where x.userId = ? AND y.id = x.serviceID';
          //qry = 'select x.*, y.serviceName from serviceHistory x join services y where x.userId = ? AND x.serviceID = y.id';
          //qry = 'select x.*, y.serviceName from serviceHistory x join services y where x.userId = ? AND x.serviceID = y.id';
-         qry = 'select x.*, y.*, z.serviceName' + formatDate + ' from serviceHistory x join Users y join Services z where x.userId = ? AND x.technicianId = y.id AND x.serviceID = z.id';
+         qry = 'select x.*, y.*, z.serviceName, v.amount' + formatDate + ' from serviceHistory x join Users y join Services z join ServicesOffer v where x.userId = ? AND x.technicianId = y.id AND x.serviceID = z.id AND x.serviceID = v.serviceID';
          qryParams = req.session.id;
          cnn.query(qry, qryParams, function(err, response) {
             if (err) {
