@@ -4,7 +4,7 @@ var Tags = require('../Validator.js').Tags;
 var router = Express.Router({caseSensitive: true});
 router.baseURL = '/User';
 var formatDate = ', DATE_FORMAT(whenRegistered, \'\%b \%d \%Y \%h\:\%i \%p\') as formatDate';
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 router.get('/serviceHistory/all', function(req, res) {
@@ -16,10 +16,23 @@ router.get('/serviceHistory/all', function(req, res) {
    //console.log(req.query.permission + JSON.stringify(req.session));
    if(vld.check(admin, Tags.noPermission)) {
       connections.getConnection(res, function(cnn) {
+<<<<<<< HEAD
          //qry = 'SELECT serviceHistory.*, y.serviceName FROM serviceHistory x JOIN Services y where x.userId = ? AND y.id = x.serviceID';
          //qry = 'select x.*, y.serviceName from serviceHistory x join services y where x.userId = ? AND x.serviceID = y.id';
          //qry = 'select x.*, y.serviceName from serviceHistory x join services y where x.userId = ? AND x.serviceID = y.id';
          qry = 'select x.*, y.*, z.serviceName, v.amount' + formatDate + ' from serviceHistory x join Users y join Services z join ServicesOffer v where x.userId = ? AND x.technicianId = y.id AND x.serviceID = z.id AND x.serviceID = v.serviceID';
+||||||| merged common ancestors
+         //qry = 'SELECT serviceHistory.*, y.serviceName FROM serviceHistory x JOIN Services y where x.userId = ? AND y.id = x.serviceID';
+         //qry = 'select x.*, y.serviceName from serviceHistory x join services y where x.userId = ? AND x.serviceID = y.id';
+         //qry = 'select x.*, y.serviceName from serviceHistory x join services y where x.userId = ? AND x.serviceID = y.id';
+         qry = 'select x.*, y.*, z.serviceName' + formatDate + ' from serviceHistory x join Users y join Services z where x.userId = ? AND x.technicianId = y.id AND x.serviceID = z.id';
+=======
+
+//         qry = 'select x.*, y.*, z.serviceName from serviceHistory x join Users y join Services z where x.userId = ? AND x.technicianId = y.id AND x.serviceID = z.id';
+
+         qry = 'select x.*, y.*, z.serviceName, t.status' + formatDate + ' from serviceHistory x join Users y join Services z join ServicesOffer t where x.userId = ? AND x.technicianId = y.id AND x.serviceID = z.id AND z.id = t.serviceId';
+
+>>>>>>> master
          qryParams = req.session.id;
          cnn.query(qry, qryParams, function(err, response) {
             if (err) {

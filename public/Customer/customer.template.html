@@ -63,7 +63,12 @@
                   <thead>
                     <tr>
                       <th>Service Name</th>
+<<<<<<< HEAD
                       <th>Price</th>
+||||||| merged common ancestors
+=======
+                      <th>Service Status</th>
+>>>>>>> master
                       <th>Technician Name</th>
                       <th>Technician Email</th>
                       <th>Technician Phone</th>
@@ -73,7 +78,14 @@
                 <tbody>
                   <tr ng-repeat="hist in hists" class="alert alert-warning" role="alert">
                       <td>{{hist.serviceName}}</td>
+<<<<<<< HEAD
                       <td>${{hist.amount}}</td>
+||||||| merged common ancestors
+=======
+                      <td ng-if="hist.status === 0">Open</td>
+                      <td ng-if="hist.status === 1">Pending</td>
+                      <td ng-if="hist.status === 2">Closed</td>
+>>>>>>> master
                       <td>{{hist.firstName}} {{hist.lastName}}</td>
                       <td>{{hist.email}}</td>
                       <td>{{hist.phone}}</td>

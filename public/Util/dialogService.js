@@ -4,6 +4,7 @@ app.service("notifyDlg", ["$uibModal", function(uibM) {
       this.show = function(scp, msg, hdr) {
          scp.msg = msg;
          scp.hdr = hdr;
+			scp.submitted = 0;
          return uibM.open({
             templateUrl: 'Util/dialogTemplate.html',
             scope: scp,
