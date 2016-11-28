@@ -51,7 +51,9 @@
                  <tbody>
                    <tr ng-repeat="ser in listServices">
                      <td>{{ser.serviceName}}</td>
-                     <td>{{ser.status}}</td>
+                     <td ng-if="ser.status === 0">Open</td>
+                     <td ng-if="ser.status === 1">Pending</td>
+                     <td ng-if="ser.status === 2">Closed</td>
                      <td>{{ser.formatDate}}</td>
                      <td>
                        <button type="button" class="btn btn-primary" ng-click="deleteService(ser.id)">Delete</button>
