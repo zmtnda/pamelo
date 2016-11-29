@@ -1,7 +1,7 @@
 node_modules/
 ~*
 exampleConnection.json
-connection.json
+Routes/connection.json
 *.log
 *.DS_Store
 Test/
