@@ -100,8 +100,8 @@
           .catch(function(err){noDlg.show(scope, err, "Error")});
       }
 
-      scope.order = function(id){
-          http.put('Serv/' + id + '/Order')
+      scope.order = function(id, techId){
+          http.put('Serv/' + id + "/" + techId + '/Order')
           .then(function(){
             state.reload();
           })
