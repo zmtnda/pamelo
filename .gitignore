@@ -4,3 +4,5 @@ exampleConnection.json
 connection.json
 *.log
 *.DS_Store
+Test/
+Spec.docx
