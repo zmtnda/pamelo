@@ -41,7 +41,7 @@
                    </tr>
                  </thead>
                  <tbody>
-                   <tr ng-repeat="ser in offerServices">
+                   <tr ng-repeat="ser in offerServices | filter: {status: 0}">
                      <td>${{ser.amount}}</td>
                      <td>{{tech[$index]}}</td>
                      <td>{{ser.formatDate}}</td>
