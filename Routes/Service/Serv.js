@@ -151,18 +151,19 @@ router.get('/:servId', function(req, res) {
 
 //Update Service table status and Create an order history
 //if user order the service and have open ticket for that serivce
-router.put('/:servId/Order', function(req, res) {
+router.put('/:servId/:techId/Order', function(req, res) {
 	var vld = req.validator;
 	var servId = req.session && req.params.servId;
+	var techId = req.params.techId;
 
 		connections.getConnection(res, function(cnn) {
 			//check if such servId exist and get techId
-			cnn.query(' SELECT * FROM ServicesOffer WHERE id = ? ', servId,
+			cnn.query(' SELECT * FROM ServicesOffer WHERE id = ? AND technicianId = ? ', [servId, techId],
 				function(err, result){
 					console.log("Order servId= " + servId );
 					if(vld.chain(result.length, Tags.notFound).check(!result[0].status == 1, Tags.alreadyTakenService)){
 						//check if service is already taken when status = 1
-						cnn.query(' UPDATE ServicesOffer SET status = ? WHERE id = ? ', [1 ,servId],
+						cnn.query(' UPDATE ServicesOffer SET status = ? WHERE id = ? AND technicianId = ? ', [1 ,servId, techId],
 						function(err){
 							if(err){
 								res.status(400).end();
@@ -172,15 +173,15 @@ router.put('/:servId/Order', function(req, res) {
 								console.log("Successfully updated service=" + JSON.stringify(result[0]));
 								var order = {
 									'userId': req.session.id,
-									'technicianId': parseInt(result[0].technicianId),
-									'serviceId': parseInt(servId),
+									'technicianId': result[0].technicianId,
+									'serviceId': result[0].serviceId,
 									'whenCompleted': new Date()
 								};
 								//time to insert a new record in the orderhistory table
 								cnn.query(' INSERT INTO serviceHistory SET ?', order,
 								function(err){
 									if(err){
-										console.log("Error in Serv/:servId/Order" + JSON.stringify(order));
+										console.log("Error in Serv/:servId:techId/Order" + JSON.stringify(order));
 										res.status(400).json(err);
 									}
 									else{
