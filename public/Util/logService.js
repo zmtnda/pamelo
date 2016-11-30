@@ -41,7 +41,7 @@ function(rscope, http, state, nDlg, route) {
                 rscope.loggedUser.key = null;
             rscope.inSession = null;
             rscope.cookie = null;
-            nDlg.show(rscope, "Invalid Input");
+            nDlg.show(rscope, "Login information was incorrect.");
         });
       }
 
