@@ -17,10 +17,9 @@ router.get('/serviceHistory/all', function(req, res) {
    //console.log(req.query.permission + JSON.stringify(req.session));
    if(vld.check(admin, Tags.noPermission)) {
       connections.getConnection(res, function(cnn) {
-         //qry = 'SELECT serviceHistory.*, y.serviceName FROM serviceHistory x JOIN Services y where x.userId = ? AND y.id = x.serviceID';
-         //qry = 'select x.*, y.serviceName from serviceHistory x join services y where x.userId = ? AND x.serviceID = y.id';
-         //qry = 'select x.*, y.serviceName from serviceHistory x join services y where x.userId = ? AND x.serviceID = y.id';
-         qry = 'select x.*, y.*, z.serviceName, v.status, v.amount' + formatDate + ' from serviceHistory x join Users y join Services z join ServicesOffer v where x.userId = ? AND x.technicianId = y.id AND x.serviceID = z.id AND x.serviceID = v.serviceID';
+         qry = 'SELECT x.*, y.*, z.serviceName, v.status, v.amount ' + formatDate +
+			' FROM serviceHistory x JOIN Users y JOIN Services z JOIN ServicesOffer v WHERE x.userId = ? ' +
+			' AND x.technicianId = y.id AND x.serviceID = z.id AND x.serviceID = v.serviceID AND x.technicianId = v.technicianId ';
 
          qryParams = req.session.id;
          cnn.query(qry, qryParams, function(err, response) {
@@ -160,6 +159,9 @@ router.put('/:id', function(req, res) {
    { // check to see if the user is trying to change the password
      console.log(JSON.stringify(body));
           connections.getConnection(res, function(cnn) { // Done with if conditional
+              if(body.password) { 
+                  body.password = bcrypt.hashSync(body.password, saltRounds);
+              }
            cnn.query("update Users set ? where id = ?", [req.body, req.params.id],
            function(err) {
               if(err)
