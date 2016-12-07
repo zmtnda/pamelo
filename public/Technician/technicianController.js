@@ -87,7 +87,7 @@ app.controller('technicianController', ['$scope', '$state','logService', '$http'
           noDlg.show(scope, "Please re-login to see the changes", "NOTE!!!");
           //state.reload();
         })
-        .catch(function(err){noDlg.show(scope, err, "Error")});
+        .catch(function(err){noDlg.show(scope, "No login info to update", "Error")});
     }
 
 
