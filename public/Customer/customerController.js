@@ -97,7 +97,7 @@
             noDlg.show(scope, "Please re-login to see the changes", "NOTE!!!","Message");
             //state.();
           })
-          .catch(function(err){noDlg.show(scope, err, "Error")});
+          .catch(function(err){noDlg.show(scope, "No login info to update", "Error")});
       }
 
       scope.order = function(id, techId){
